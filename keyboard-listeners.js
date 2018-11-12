@@ -1,6 +1,6 @@
 document.addEventListener('keydown', pressedKey);
 document.addEventListener('keyup', releasedKey);
-window.addEventListener("deviceorientation", orientationChanged, true);
+window.addEventListener("deviceorientation", handleOrientation, true);
 
 class GameAction {
     constructor() {
@@ -47,5 +47,6 @@ function releasedKey(event) {
 
 function orientationChanged (event) {
     gameAction.moveX = Math.round(event.gamma); // Left - Right
+    lives = event.gamma;
     gameAction.moveY = Math.round(event.beta); // Forward - Backward
 }
