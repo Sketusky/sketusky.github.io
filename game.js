@@ -1,10 +1,12 @@
 window.onload = function () {
     var canv = document.getElementById("canvas");
     var ctx = canv.getContext("2d");
-    ctx.canvas.width  = window.innerWidth;
-    ctx.canvas.height = window.innerHeight;
-    
-    var worldSpeed = 1.0 / 1000.0;
+    // ctx.canvas.width  = window.innerWidth;
+    // ctx.canvas.height = window.innerHeight;
+    ctx.canvas.width  = 360;
+    ctx.canvas.height = 640;
+
+    var worldSpeed = 0.5 / 1000.0;
 
     var score = 0;
     var healthLevel = 5;
@@ -71,8 +73,8 @@ window.onload = function () {
 
     var game = {
         update: function (dt) {
-            ctx.canvas.width  = window.innerWidth;
-            ctx.canvas.height = window.innerHeight;
+            // ctx.canvas.width  = window.innerWidth;
+            // ctx.canvas.height = window.innerHeight;
             
             background.update(dt, worldSpeed);
             enemies.forEach(enemy => {
