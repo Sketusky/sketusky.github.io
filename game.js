@@ -6,7 +6,7 @@ window.onload = function () {
     ctx.canvas.width  = 360;
     ctx.canvas.height = 640;
 
-    var worldSpeed = 0.5 / 1000.0;
+    var worldSpeed = 1.0 / 1000.0;
 
     var score = 0;
     var healthLevel = 5;
@@ -44,18 +44,10 @@ window.onload = function () {
         if (enemies.length < 25) {
             var enemy = new Enemy();
             var x = Math.floor(Math.random() * (canv.width - enemy.getWidth()));
-            // if(enemies.length > 0) {
-            //     x1 = Math.floor(Math.random() * (enemies[enemies.length-1] - enemy.getWidth()));
-            //     x2 = Math.floor(Math.random() * (canv.width - enemy.getWidth()) + enemies[enemies.length-1] - enemy.getWidth());
-            //     if(Math.floor(Math.random() * 1)) {
-            //         x = x1;
-            //     } else {
-            //         x = x2;
-            //     }
-            // }
-            // while(enemies.length > 0 && enemies[enemies.length-1].x + 2*enemies[enemies.length-1].width <= x && x <= enemies[enemies.length-1].x + 2*enemies[enemies.length-1].width) {
-            //     x = Math.floor(Math.random() * (canv.width - enemy.getWidth()));
-            // }
+            var randomOffset = (Math.floor(Math.random() * (1000)) + 500) / 1000;
+            while(enemies.length > 0 && enemies[enemies.length-1].x - randomOffset*enemies[enemies.length-1].width <= x && x <= enemies[enemies.length-1].x + randomOffset*enemies[enemies.length-1].width && x + enemy.getWidth() <= canv.width) {
+                x = Math.floor(Math.random() * (canv.width - enemy.getWidth()));
+            }
             enemy.setX(x);
             enemies.push(enemy);
         }
@@ -163,6 +155,6 @@ window.onload = function () {
             window.requestAnimationFrame(mainLoop);
         }
     }
-    setInterval(spawnEnemy, 1000);
+    setInterval(spawnEnemy, 777);
     mainLoop();
 };
