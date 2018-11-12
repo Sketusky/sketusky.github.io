@@ -2,6 +2,7 @@ document.addEventListener('keydown', pressedKey);
 document.addEventListener('keyup', releasedKey);
 window.addEventListener("deviceorientation", handleOrientation, true);
 
+var canv = document.getElementById("canvas");
 canv.addEventListener("touchstart", handleStart, false);
 canv.addEventListener("touchend", handleEnd, false);
 

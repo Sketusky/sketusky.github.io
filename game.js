@@ -1,5 +1,4 @@
 window.onload = function () {
-    var canv = document.getElementById("canvas");
     var ctx = canv.getContext("2d");
     var worldSpeed = 1.0 / 1000.0;
 
