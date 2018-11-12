@@ -123,40 +123,6 @@ window.onload = function () {
         }
     };
 
-    function handleStart(event) {
-        event.preventDefault();
-        var touches = event.changedTouches;
-        console.log("x:" + touches[0].clientX + " y:" + touches[0].clientY);
-        console.log("Handle start");
-        player.setXMovePosition(touches[0].clientX);
-    }
-
-    function handleEnd(event) {
-        event.preventDefault();
-        var touches = event.changedTouches;
-        console.log("x:" + touches[0].clientX + " y:" + touches[0].clientY);
-        console.log("Handle end");
-    }
-
-    function handleCancel(event) {
-        event.preventDefault();
-        var touches = event.changedTouches;
-        console.log("x:" + touches[0].clientX + " y:" + touches[0].clientY);
-        console.log("Handle cancel");
-    }
-
-    function handleMove(event) {
-        event.preventDefault();
-        var touches = event.changedTouches;
-        console.log("x:" + touches[0].clientX + " y:" + touches[0].clientY);
-        console.log("Handle move");
-    }
-
-    canv.addEventListener("touchstart", handleStart, false);
-    canv.addEventListener("touchend", handleEnd, false);
-    canv.addEventListener("touchcancel", handleCancel, false);
-    canv.addEventListener("touchmove", handleMove, false);
-
     const FPS = 90;
     var lastFrame = 0;
     var frameIntervalUpdate = 1000.0 / FPS;
