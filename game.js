@@ -1,6 +1,9 @@
 window.onload = function () {
     var canv = document.getElementById("canvas");
     var ctx = canv.getContext("2d");
+    ctx.canvas.width  = window.innerWidth;
+    ctx.canvas.height = window.innerHeight;
+    
     var worldSpeed = 1.0 / 1000.0;
 
     var score = 0;
@@ -84,7 +87,7 @@ window.onload = function () {
                 spawnBullet();
                 gameAction.shoot = 0;
             }
-            
+
             collisionDetect();
             enemyCollisionDetect();
 

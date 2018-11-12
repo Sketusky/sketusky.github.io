@@ -1,5 +1,6 @@
 class Background {
-    constructor() {
+    constructor(canv) {
+        this.canv = canv;
         this.backgrounds = [];
         
         var background = new Image();
@@ -26,7 +27,7 @@ class Background {
     }
 
     draw(ctx) {
-        ctx.drawImage(this.backgrounds[0], 0, 0, this.backgrounds[0].width, this.backgrounds[0].height, 0, this.y, this.backgrounds[0].width, this.backgrounds[0].height);
-        ctx.drawImage(this.backgrounds[1], 0, 0, this.backgrounds[1].width, this.backgrounds[1].height, 0, -this.backgrounds[0].height + 1 + this.y, this.backgrounds[1].width, this.backgrounds[1].height);
+        ctx.drawImage(this.backgrounds[0], 0, 0, this.backgrounds[0].width, this.backgrounds[0].height, 0, this.y, this.canv.width, this.canv.height);
+        ctx.drawImage(this.backgrounds[1], 0, 0, this.backgrounds[1].width, this.backgrounds[1].height, 0, -this.backgrounds[0].height + 1 + this.y, this.canv.width, this.canv.height);
     }
 }
