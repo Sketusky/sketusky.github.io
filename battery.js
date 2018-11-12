@@ -13,6 +13,6 @@ class Battery {
     }
 
     draw(ctx) {
-        ctx.drawImage(this.body, this.level*this.body.width/5, 0, this.body.width/5, this.body.height, this.x - this.body.width/5, this.y - this.body.height, this.body.width/5, this.body.height);
+        ctx.drawImage(this.body, this.level*this.body.width/5, 0, this.body.width/5, this.body.height, this.x - this.body.width/5 - 5, this.y - this.body.height - 5, this.body.width/5, this.body.height);
     }
 }

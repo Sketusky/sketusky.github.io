@@ -8,7 +8,7 @@
 
       this.x = 0;
       this.y = -this.alien.height;
-      this.ySpeed = 75;
+      this.ySpeed = 100;
     }
 
     getWidth() {

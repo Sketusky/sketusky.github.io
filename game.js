@@ -80,14 +80,15 @@ window.onload = function () {
                 }
             });
 
-            battery.update(5-healthLevel);
-            
             if(gameAction.shoot === 1) {
                 spawnBullet();
                 gameAction.shoot = 0;
             }
+            
             collisionDetect();
             enemyCollisionDetect();
+
+            battery.update(5-healthLevel);
         },
         draw: function () {
             ctx.clearRect(0, 0, canv.width, canv.height);
@@ -106,35 +107,27 @@ window.onload = function () {
 
             ctx.save();
 
-            ctx.font = "20pt Comic Sans MS";
+            ctx.font = "20pt Calibri";
             ctx.fillStyle = "yellow";
             // ctx.shadowColor = "rgba(0,0,0,0.3)";
             ctx.shadowColor = "black";
             ctx.shadowBlur = 3;
             ctx.fillText("Score " + score, 10, 30); 
 
-
             ctx.restore();
 
-            ctx.save();
+            if(healthLevel <= 1) {
+                ctx.save();
 
-            ctx.font = "22pt Comic Sans MS";
-            ctx.fillStyle = "yellow";
-            // ctx.shadowColor = "rgba(0,0,0,0.3)";
-            ctx.shadowColor = "black";
-            ctx.shadowBlur = 3;
-            ctx.textAlign="right";
-            ctx.fillText("Lives " + healthLevel, canv.width - 10, 30); 
+                ctx.font = "22pt Verdana";
+                ctx.fillStyle = "white";
+                ctx.shadowColor = "black";
+                ctx.shadowBlur = 3;
+                ctx.textAlign="center";
+                ctx.fillText("GameOver", canv.width/2, canv.height/2); 
 
-
-            ctx.restore();
-
-            // if(gameAction.shoot === 1) {
-            //     this.bullet = new Image();
-            //     this.bullet.src = "./bullet.png";
-            //     ctx.drawImage(this.bullet, 0, 0, this.bullet.width, this.bullet.height, canv.width/2, canv.height/2, this.bullet.width/2, this.bullet.height/2);
-            //     gameAction.shoot = 0;
-            // }
+                ctx.restore();
+            }
         }
     };
 
@@ -158,7 +151,9 @@ window.onload = function () {
             game.draw(delta);
             updateGraphics = false;
         }
-        window.requestAnimationFrame(mainLoop);
+        if(healthLevel > 1) {
+            window.requestAnimationFrame(mainLoop);
+        }
     }
     setInterval(spawnEnemy, 1000);
     mainLoop();
