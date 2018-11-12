@@ -1,13 +1,15 @@
 window.onload = function () {
+    var canv = document.getElementById("canvas");
     var ctx = canv.getContext("2d");
     var worldSpeed = 1.0 / 1000.0;
 
     var score = 0;
-    var lives = 0;
+    var healthLevel = 5;
     var enemies = [];
     var bullets = [];
     var player = new Player(gameAction, canv);
     var background = new Background(canv);
+    var battery = new Battery(canv.width, canv.height);
 
     function collisionDetect() {
         for(i=0; i < bullets.length; i++) {
@@ -23,6 +25,16 @@ window.onload = function () {
             }
         }
     }
+    
+    function enemyCollisionDetect() {
+        for(j=0; j < enemies.length; j++) {
+            if(enemies[j].y >= canv.height) {
+                enemies.splice(j, 1);
+                healthLevel--;
+            }
+        }
+    }
+
     function spawnEnemy() {
         if (enemies.length < 25) {
             var enemy = new Enemy();
@@ -63,17 +75,19 @@ window.onload = function () {
             player.update(dt, worldSpeed);
             bullets.forEach(function (bullet, index, object) {
                 bullet.update(dt, worldSpeed);
-                
                 if(bullet.y < 0) {
                     object.splice(index, 1);
                 }
             });
+
+            battery.update(5-healthLevel);
             
             if(gameAction.shoot === 1) {
                 spawnBullet();
                 gameAction.shoot = 0;
             }
             collisionDetect();
+            enemyCollisionDetect();
         },
         draw: function () {
             ctx.clearRect(0, 0, canv.width, canv.height);
@@ -85,6 +99,8 @@ window.onload = function () {
             enemies.forEach(enemy => {
                 enemy.draw(ctx);
             });
+
+            battery.draw(ctx);
 
             player.draw(ctx);
 
@@ -108,7 +124,7 @@ window.onload = function () {
             ctx.shadowColor = "black";
             ctx.shadowBlur = 3;
             ctx.textAlign="right";
-            ctx.fillText("Lives " + lives, canv.width - 10, 30); 
+            ctx.fillText("Lives " + healthLevel, canv.width - 10, 30); 
 
 
             ctx.restore();

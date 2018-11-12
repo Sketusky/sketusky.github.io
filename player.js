@@ -7,7 +7,7 @@
 
       this.x = this.canv.width/2 - this.body.width/2;
       this.y = this.canv.height - 20;
-      this.xSpeed = 250;
+      this.xSpeed = 200;
       this.ySpeed = -100;
 
       this.rotation = 0;
