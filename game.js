@@ -71,6 +71,9 @@ window.onload = function () {
 
     var game = {
         update: function (dt) {
+            ctx.canvas.width  = window.innerWidth;
+            ctx.canvas.height = window.innerHeight;
+            
             background.update(dt, worldSpeed);
             enemies.forEach(enemy => {
                 enemy.update(dt, worldSpeed);
