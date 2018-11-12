@@ -45,7 +45,7 @@ function releasedKey(event) {
     }
 }
 
-function orientationChanged (event) {
+function handleOrientation (event) {
     gameAction.moveX = Math.round(event.gamma); // Left - Right
     lives = event.gamma;
     gameAction.moveY = Math.round(event.beta); // Forward - Backward
