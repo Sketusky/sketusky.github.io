@@ -19,6 +19,14 @@
       this.x = x;
     }
 
+    getTopY() {
+      return this.y;
+    }
+
+    getBottomY() {
+      return this.y + this.height;
+    }
+
     update(dt, worldSpeed) {
       // this.x += this.xSpeed * dt * worldSpeed;
       this.y += this.ySpeed * dt * worldSpeed;
@@ -31,7 +39,7 @@
     draw(ctx) {
       // ctx.drawImage(this.alien, 0, 0, this.alien.width, this.alien.height, this.x - this.alien.width/2, this.y - this.alien.height, this.alien.width, this.alien.height);
 
-      ctx.drawImage(this.alien, 0, 0, this.alien.width, this.alien.height, this.x, this.y - this.alien.height, this.alien.width, this.alien.height);
+      ctx.drawImage(this.alien, 0, 0, this.alien.width, this.alien.height, this.x, this.y, this.alien.width, this.alien.height);
       // ctx.save();
       // ctx.translate(this.x, this.y);
 

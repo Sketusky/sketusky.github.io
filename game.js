@@ -10,16 +10,17 @@ window.onload = function () {
 
     var score = 0;
     var healthLevel = 5;
+    var aidkits = [];
     var enemies = [];
     var bullets = [];
     var player = new Player(gameAction, canv);
     var background = new Background(canv);
     var battery = new Battery(canv.width, canv.height);
 
-    function collisionDetect() {
+    function enemyBulletCollisionDetect() {
         for(i=0; i < bullets.length; i++) {
             for(j=0; j < enemies.length; j++) {
-                if(enemies[j].y <= bullets[i].y && bullets[i].y <= enemies[j].y + enemies[j].height
+                if(enemies[j].getTopY() <= bullets[i].getTopY() && bullets[i].y <= enemies[j].getBottomY()
                     && enemies[j].x <= bullets[i].x && bullets[i].x <= enemies[j].x + enemies[j].width) {
                     console.log("collision!");
                     bullets.splice(i, 1);
@@ -30,13 +31,33 @@ window.onload = function () {
             }
         }
     }
+
+    function aidKitCollisionDetect() {
+        for(i=0; i < aidkits.length; i++) {
+            if(aidkits[i].getTopY() <= player.y && player.y <= aidkits[i].getBottomY()) {
+                aidkits.splice(i, 1);
+                if(healthLevel < 5) {
+                    healthLevel++;
+                }
+            }
+        }
+    }
     
-    function enemyCollisionDetect() {
+    function enemyCollisionDetectWithBorder() {
         for(j=0; j < enemies.length; j++) {
-            if(enemies[j].y >= canv.height) {
+            if(enemies[j].getBottomY() >= canv.height) {
                 enemies.splice(j, 1);
                 healthLevel--;
             }
+        }
+    }
+
+    function spawnAidKit() {
+        if (healthLevel < 5 && performance.now() % 17 === 0) {
+            var aidkit = new AidKit();
+            var x = Math.floor(Math.random() * (canv.width - aidkit.getWidth()));
+            aidkit.setX(x);
+            aidkits.push(aidkit);
         }
     }
 
@@ -85,14 +106,24 @@ window.onload = function () {
                 gameAction.shoot = 0;
             }
 
-            collisionDetect();
-            enemyCollisionDetect();
+            enemyBulletCollisionDetect();
+            enemyCollisionDetectWithBorder();
 
             battery.update(5-healthLevel);
+
+            aidkits.forEach(aidkit => {
+                aidkit.update(dt, worldSpeed);
+            });
+            aidKitCollisionDetect();
         },
         draw: function () {
             ctx.clearRect(0, 0, canv.width, canv.height);
             background.draw(ctx);
+            
+            aidkits.forEach(aidkit => {
+                aidkit.draw(ctx);
+            });
+
             bullets.forEach(bullet => {
                 bullet.draw(ctx);
             });
@@ -128,6 +159,8 @@ window.onload = function () {
 
                 ctx.restore();
             }
+
+            
         }
     };
 
@@ -156,5 +189,6 @@ window.onload = function () {
         }
     }
     setInterval(spawnEnemy, 777);
+    setInterval(spawnAidKit, 500);
     mainLoop();
 };

@@ -5,8 +5,11 @@
       this.canv = canv;
       this.gameAction = gameAction;
 
+      this.width = this.body.width;
+      this.height = this.body.height;
+
       this.x = this.canv.width/2 - this.body.width/2;
-      this.y = this.canv.height - 20;
+      this.y = this.canv.height  - this.height - 20;
 
       this.xSpeed = this.canv.width*0.75;
       this.ySpeed = -100;
@@ -24,7 +27,11 @@
     }
 
     getTopY() {
-      return this.y - this.body.height;
+      return this.y;
+    }
+
+    getBottomY() {
+      return this.y + this.height;
     }
 
     update(dt, worldSpeed) {
@@ -43,23 +50,23 @@
       }
 
       //If outside left side
-      if(this.x < 0) {
+      if(this.x <= 0) {
         this.x = 0;
       }
 
       //If outside right side
-      if(this.x > this.canv.width - this.body.width ) {
+      if(this.x >= this.canv.width - this.body.width ) {
         this.x = this.canv.width - this.body.width;
       }
 
       //If outisde bottom side
-      if(this.y > this.canv.height) {
-        this.y = this.canv.height;
+      if(this.getBottomY() > this.canv.height) {
+        this.y = this.canv.height - this.height;
       }
 
       //If outside top side
-      if(this.y < this.body.height) {
-        this.y = this.body.height;
+      if(this.getTopY() <= 0) {
+        this.y = 0;
       }
 
       this.rotation =
@@ -69,7 +76,7 @@
     }
 
     draw(ctx) {
-      ctx.drawImage(this.body, 0, 0, this.body.width, this.body.height, this.x, this.y - this.body.height, this.body.width, this.body.height);
+      ctx.drawImage(this.body, 0, 0, this.body.width, this.body.height, this.x, this.y, this.body.width, this.body.height);
       // ctx.save();
       // ctx.translate(this.x, this.y);
 

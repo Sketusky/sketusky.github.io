@@ -9,11 +9,19 @@ class Bullet {
         this.ySpeed = -300;
     }
 
+    getTopY() {
+        return this.y;
+    }
+
+    getBottomY() {
+        return this.y + this.height;
+    }
+
     update(dt, worldSpeed) {
         this.y += this.ySpeed * dt * worldSpeed;
     }
 
     draw(ctx) {
-        ctx.drawImage(this.body, 0, 0, this.body.width, this.body.height, this.x - this.body.width/2, this.y - this.body.height, this.body.width, this.body.height);
+        ctx.drawImage(this.body, 0, 0, this.body.width, this.body.height, this.x, this.y, this.body.width, this.body.height);
     }
 }
