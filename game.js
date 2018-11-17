@@ -10,8 +10,6 @@ function startGame() {
     var ctx = canv.getContext("2d");
     ctx.canvas.width  = window.innerWidth;
     ctx.canvas.height = window.innerHeight;
-    // ctx.canvas.width = 360;
-    // ctx.canvas.height = 640;
 
     var worldSpeed = 1.0 / 1000.0;
 
@@ -69,13 +67,9 @@ function startGame() {
     }
 
     function spawnEnemy() {
-        if (enemies.length < 25) {
+        if (enemies.length < 9) {
             var enemy = new Enemy(images);
-            var x = Math.floor(Math.random() * (canv.width - enemy.getWidth()));
-            var randomOffset = (Math.floor(Math.random() * (1000)) + 500) / 1000;
-            while (enemies.length > 0 && enemies[enemies.length - 1].x - randomOffset * enemies[enemies.length - 1].width <= x && x <= enemies[enemies.length - 1].x + randomOffset * enemies[enemies.length - 1].width && x + enemy.getWidth() <= canv.width) {
-                x = Math.floor(Math.random() * (canv.width - enemy.getWidth()));
-            }
+            var x = enemy.width * Math.floor(Math.random() * (this.canv.width / enemy.width));
             enemy.setX(x);
             enemies.push(enemy);
         }
@@ -92,10 +86,17 @@ function startGame() {
         }
     }
 
+    var lastEnemySpawnTime = 0;
     var game = {
         update: function (dt) {
             ctx.canvas.width  = window.innerWidth;
             ctx.canvas.height = window.innerHeight;
+
+            if(performance.now() - lastEnemySpawnTime > (600 + enemies.length*100)) {
+                lastEnemySpawnTime = performance.now();
+                spawnEnemy();
+            } 
+
 
             background.update(dt, worldSpeed);
             enemies.forEach(enemy => {
@@ -177,7 +178,7 @@ function startGame() {
             ctx.shadowColor = "black";
             ctx.shadowBlur = 3;
             ctx.textAlign = "right";
-            ctx.fillText("19:48 17.11.2018", canv.width - 20, 30);
+            ctx.fillText("20:27 17.11.2018", canv.width - 20, 30);
 
             ctx.restore();
 
@@ -208,7 +209,6 @@ function startGame() {
             window.requestAnimationFrame(mainLoop);
         }
     }
-    setInterval(spawnEnemy, 777);
     setInterval(spawnAidKit, 2000);
     mainLoop();
 }
