@@ -1,7 +1,6 @@
- class Player {
-    constructor(gameAction, canv) {
-      this.body = new Image();
-      this.body.src = "./assets/helikopter_yellow.png";
+class Player {
+    constructor(images, gameAction, canv) {
+      this.body = images.get('helicopter');
       this.canv = canv;
       this.gameAction = gameAction;
 

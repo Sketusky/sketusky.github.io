@@ -1,7 +1,6 @@
 class AidKit {
-    constructor() {
-        this.asset = new Image();
-        this.asset.src = "./assets/aidkit_360.png";
+    constructor(images) {
+        this.asset = images.get('aidkit');
 
         this.width = this.asset.width;
         this.height = this.asset.height;

@@ -1,13 +1,10 @@
 class Background {
-    constructor(canv) {
+    constructor(images, canv) {
         this.canv = canv;
         this.backgrounds = [];
         
-        var background = new Image();
-        background.src = "./assets/background_360.png";
-
-        var background2 = new Image();
-        background2.src = "./assets/background_2_360.png";
+        var background = images.get('background');
+        var background2 = images.get('background_2');
 
         this.backgrounds.push(background);
         this.backgrounds.push(background2);

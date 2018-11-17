@@ -1,7 +1,6 @@
 class Bullet {
-    constructor(startX, startY) {
-        this.body = new Image();
-        this.body.src = "./assets/bullet.png";
+    constructor(images, startX, startY) {
+        this.body = images.get('bullet');
 
         this.x = startX;
         this.y = startY;
