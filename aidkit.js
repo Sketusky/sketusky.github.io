@@ -5,7 +5,7 @@ class AidKit {
 
         this.x = 0;
         this.y = -this.image.height;
-        this.ySpeed = 75;
+        this.ySpeed = window.innerHeight*0.15;
     }
 
     getWidth() {

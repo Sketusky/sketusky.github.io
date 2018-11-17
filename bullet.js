@@ -6,8 +6,7 @@ class Bullet {
 
         this.x = startX;
         this.y = startY;
-        this.xSpeed = 200;
-        this.ySpeed = -300;
+        this.ySpeed = -window.innerHeight*0.8;
     }
 
     getTopY() {

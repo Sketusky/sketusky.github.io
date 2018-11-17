@@ -10,7 +10,7 @@ class Background {
         this.backgrounds.push(background2);
 
         this.y = 0;
-        this.ySpeed = 130;
+        this.ySpeed = window.innerHeight*0.05;
     }
 
     update(dt, worldSpeed) {

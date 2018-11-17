@@ -5,7 +5,7 @@ class Enemy {
 
     this.x = 0;
     this.y = -this.image.height;
-    this.ySpeed = 100;
+    this.ySpeed = window.innerHeight*0.2;
   }
 
   getWidth() {

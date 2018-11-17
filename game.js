@@ -197,6 +197,6 @@ function startGame() {
         }
     }
     setInterval(spawnEnemy, 777);
-    setInterval(spawnAidKit, 500);
+    setInterval(spawnAidKit, 1000);
     mainLoop();
 }
