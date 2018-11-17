@@ -1,17 +1,15 @@
 class Enemy {
   constructor(images) {
-    this.alien = images.get('alien');
-
-    this.width = this.alien.width;
-    this.height = this.alien.height;
+    this.image = images.get('alien');
+    this.updateSize();
 
     this.x = 0;
-    this.y = -this.alien.height;
+    this.y = -this.image.height;
     this.ySpeed = 100;
   }
 
   getWidth() {
-    return this.alien.width;
+    return this.width;
   }
 
   setX(x) {
@@ -26,7 +24,13 @@ class Enemy {
     return this.y + this.height;
   }
 
+  updateSize() {
+    this.width = window.innerWidth / 5;
+    this.height = this.image.height/this.image.width * this.width;
+  }
+
   update(dt, worldSpeed) {
+    this.updateSize();
     // this.x += this.xSpeed * dt * worldSpeed;
     this.y += this.ySpeed * dt * worldSpeed;
     // this.rotation =
@@ -36,9 +40,7 @@ class Enemy {
   }
 
   draw(ctx) {
-    // ctx.drawImage(this.alien, 0, 0, this.alien.width, this.alien.height, this.x - this.alien.width/2, this.y - this.alien.height, this.alien.width, this.alien.height);
-
-    ctx.drawImage(this.alien, 0, 0, this.alien.width, this.alien.height, this.x, this.y, this.alien.width, this.alien.height);
+    ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height, this.x, this.y, this.width, this.height);
     // ctx.save();
     // ctx.translate(this.x, this.y);
 

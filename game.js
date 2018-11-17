@@ -8,10 +8,10 @@ function startGame() {
     console.log("GameStarted");
     var canv = document.getElementById("canvas");
     var ctx = canv.getContext("2d");
-    // ctx.canvas.width  = window.innerWidth;
-    // ctx.canvas.height = window.innerHeight;
-    ctx.canvas.width = 360;
-    ctx.canvas.height = 640;
+    ctx.canvas.width  = window.innerWidth;
+    ctx.canvas.height = window.innerHeight;
+    // ctx.canvas.width = 360;
+    // ctx.canvas.height = 640;
 
     var worldSpeed = 1.0 / 1000.0;
 
@@ -85,7 +85,7 @@ function startGame() {
 
     function spawnBullet() {
         var nowTime = window.performance.now();
-        if (nowTime - lastBulletSpawnTime > 250) {
+        if (nowTime - lastBulletSpawnTime > 300) {
             lastBulletSpawnTime = nowTime;
             var bullet = new Bullet(images, player.getCenterX(), player.getTopY() + 20);
             bullets.push(bullet);
@@ -94,8 +94,8 @@ function startGame() {
 
     var game = {
         update: function (dt) {
-            // ctx.canvas.width  = window.innerWidth;
-            // ctx.canvas.height = window.innerHeight;
+            ctx.canvas.width  = window.innerWidth;
+            ctx.canvas.height = window.innerHeight;
 
             background.update(dt, worldSpeed);
             enemies.forEach(enemy => {

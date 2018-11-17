@@ -1,17 +1,15 @@
 class AidKit {
     constructor(images) {
-        this.asset = images.get('aidkit');
-
-        this.width = this.asset.width;
-        this.height = this.asset.height;
+        this.image = images.get('aidkit');
+        this.updateSize();
 
         this.x = 0;
-        this.y = -this.asset.height;
-        this.ySpeed = 100;
+        this.y = -this.image.height;
+        this.ySpeed = 75;
     }
 
     getWidth() {
-        return this.asset.width;
+        return this.image.width;
     }
 
     setX(x) {
@@ -26,12 +24,17 @@ class AidKit {
         return this.y + this.height;
     }
 
+    updateSize() {
+        this.width = window.innerWidth / 8;
+        this.height = this.image.height/this.image.width * this.width;
+    }
+
     update(dt, worldSpeed) {
         this.y += this.ySpeed * dt * worldSpeed;
     }
 
     draw(ctx) {
-        ctx.drawImage(this.asset, 0, 0, this.asset.width, this.asset.height, this.x, this.y, this.asset.width, this.asset.height);
+        ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height, this.x, this.y, this.width, this.height);
 
         ctx.save();
 
