@@ -60,7 +60,7 @@ function startGame() {
     }
 
     function spawnAidKit() {
-        if (healthLevel < 5 && performance.now() % 11 === 0) {
+        if (healthLevel < 5 && performance.now() % 2 === 0) {
             var aidkit = new AidKit(images);
             var x = Math.floor(Math.random() * (canv.width - aidkit.getWidth()));
             aidkit.setX(x);
@@ -169,6 +169,18 @@ function startGame() {
             }
 
 
+            ctx.save();
+
+            ctx.font = "20pt Calibri";
+            ctx.fillStyle = "yellow";
+            // ctx.shadowColor = "rgba(0,0,0,0.3)";
+            ctx.shadowColor = "black";
+            ctx.shadowBlur = 3;
+            ctx.textAlign = "right";
+            ctx.fillText("19:48 17.11.2018", canv.width - 20, 30);
+
+            ctx.restore();
+
         }
     };
 
@@ -197,6 +209,6 @@ function startGame() {
         }
     }
     setInterval(spawnEnemy, 777);
-    setInterval(spawnAidKit, 1000);
+    setInterval(spawnAidKit, 2000);
     mainLoop();
 }
