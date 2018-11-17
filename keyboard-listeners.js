@@ -29,7 +29,7 @@ function pressedKey(event) {
     if (event.keyCode === 65 /* a */ ) {
         gameAction.moveX = -1;
     }
-    if (event.keyCode === 32 /* space */) {
+    if (event.keyCode === 32 /* space */ ) {
         gameAction.shoot = 1;
     }
 }
@@ -49,9 +49,16 @@ function releasedKey(event) {
     }
 }
 
-function handleOrientation (event) {
-    gameAction.moveX = Math.round(event.gamma); // Left - Right
-    gameAction.moveY = -Math.round(event.beta); // Forward - Backward
+function handleOrientation(event) {
+    if (event.gamma <= -10 && event.gamma <= 10) {
+        gameAction.moveX = event.gamma / 10; // Left - Right
+    } else if(event.gamma > 10) {
+        gameAction.moveX = 1;
+    } else {
+        gameAction.moveX = -1;
+    }
+    // gameAction.moveX = Math.round(event.gamma); 
+    gameAction.moveY = -Math.round(event.beta);
 }
 
 function handleStart(event) {

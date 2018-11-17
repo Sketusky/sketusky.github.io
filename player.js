@@ -41,16 +41,16 @@ class Player {
     this.updateSize();
     //Move left-right
     if (this.gameAction.moveX > 0) {
-      this.x += this.xSpeed * dt * worldSpeed;
+      this.x += this.xSpeed * dt * worldSpeed * Math.sin(Math.PI * this.gameAction.moveX / 2);
     } else if (this.gameAction.moveX < 0) {
-      this.x -= this.xSpeed * dt * worldSpeed;
+      this.x += this.xSpeed * dt * worldSpeed * Math.sin(Math.PI * this.gameAction.moveX / 2);
     }
 
     //Move up-down
     if (this.gameAction.moveY > 0) {
-      this.y += this.ySpeed * dt * worldSpeed;
+      this.y += this.ySpeed * dt * worldSpeed * Math.sin(Math.PI * this.gameAction.moveY / 2);
     } else if (this.gameAction.moveY < 0) {
-      this.y -= this.ySpeed * dt * worldSpeed;
+      this.y += this.ySpeed * dt * worldSpeed * Math.sin(Math.PI * this.gameAction.moveY / 2);
     }
 
     //If outside left side
