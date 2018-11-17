@@ -16,7 +16,7 @@ function startGame() {
     var worldSpeed = 1.0 / 1000.0;
 
     var score = 0;
-    var healthLevel = 4;
+    var healthLevel = 5;
     var aidkits = [];
     var enemies = [];
     var bullets = [];
