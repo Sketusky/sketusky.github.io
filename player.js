@@ -48,9 +48,9 @@ class Player {
 
     //Move up-down
     if (this.gameAction.moveY > 0) {
-      this.y += this.ySpeed * dt * worldSpeed * Math.sin(Math.PI * this.gameAction.moveY / 2);
+      this.y += this.ySpeed * dt * worldSpeed;
     } else if (this.gameAction.moveY < 0) {
-      this.y += this.ySpeed * dt * worldSpeed * Math.sin(Math.PI * this.gameAction.moveY / 2);
+      this.y -= this.ySpeed * dt * worldSpeed;
     }
 
     //If outside left side
