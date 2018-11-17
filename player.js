@@ -10,7 +10,7 @@ class Player {
     this.y = this.canv.height - this.height - 20;
 
     this.xSpeed = window.innerWidth * 0.75;
-    this.ySpeed = -window.innerHeight * 0.25;
+    this.ySpeed = -window.innerHeight * 0.25; 
 
     this.rotation = 0;
     this.rotationSpeed = 20 * 1000;
