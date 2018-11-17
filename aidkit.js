@@ -32,5 +32,16 @@ class AidKit {
 
     draw(ctx) {
         ctx.drawImage(this.asset, 0, 0, this.asset.width, this.asset.height, this.x, this.y, this.asset.width, this.asset.height);
+
+        ctx.save();
+
+        ctx.font = "12pt Verdana";
+        ctx.fillStyle = "white";
+        ctx.shadowColor = "black";
+        ctx.shadowBlur = 3;
+        ctx.textAlign = "center";
+        ctx.fillText("AidKit", this.x, this.y);
+
+        ctx.restore();
     }
 }

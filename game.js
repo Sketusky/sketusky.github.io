@@ -16,7 +16,7 @@ function startGame() {
     var worldSpeed = 1.0 / 1000.0;
 
     var score = 0;
-    var healthLevel = 5;
+    var healthLevel = 4;
     var aidkits = [];
     var enemies = [];
     var bullets = [];
@@ -60,7 +60,7 @@ function startGame() {
     }
 
     function spawnAidKit() {
-        if (healthLevel < 5 && performance.now() % 17 === 0) {
+        if (healthLevel < 5 && performance.now() % 11 === 0) {
             var aidkit = new AidKit(images);
             var x = Math.floor(Math.random() * (canv.width - aidkit.getWidth()));
             aidkit.setX(x);
@@ -199,4 +199,4 @@ function startGame() {
     setInterval(spawnEnemy, 777);
     setInterval(spawnAidKit, 500);
     mainLoop();
-};
+}
