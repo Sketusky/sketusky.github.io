@@ -4,11 +4,33 @@ window.onload = function () {
     });
 };
 
+function sound(src) {
+    this.sound = document.createElement("audio");
+    this.sound.src = src;
+    this.sound.setAttribute("preload", "auto");
+    this.sound.setAttribute("controls", "none");
+    this.sound.style.display = "none";
+    document.body.appendChild(this.sound);
+    this.play = function () {
+        this.sound.play();
+    }
+    this.stop = function () {
+        this.sound.pause();
+    }
+}
+
 function startGame() {
     console.log("GameStarted");
     var canv = document.getElementById("canvas");
     var ctx = canv.getContext("2d");
     safeView();
+
+    var healthLostSound = new sound("./assets/healthlost.mp3");
+    var healthGainSound = new sound("./assets/healthgain.mp3");
+    var gameOverSound = new sound("./assets/gameover.mp3");
+    var laserSound = new sound("./assets/laser.wav");
+    var laserSound2 = new sound("./assets/laser2.wav");
+    var spaceSound = new sound("./assets/space.mp3");
 
     var worldSpeed = 1.0 / 1000.0;
 
@@ -42,6 +64,7 @@ function startGame() {
 
                 enemies.splice(i, 1);
                 healthLevel--;
+                healthLostSound.play();
                 break;
             }
         }
@@ -68,6 +91,7 @@ function startGame() {
                 player.getStartX() <= enemyBullets[i].x && enemyBullets[i].x <= player.x + player.getWidth()) {
                 enemyBullets.splice(i, 1);
                 healthLevel--;
+                healthLostSound.play();
                 break;
             }
         }
@@ -79,6 +103,7 @@ function startGame() {
                 aidkits.splice(i, 1);
                 if (healthLevel < 5) {
                     healthLevel++;
+                    healthGainSound.play();
                 }
             }
         }
@@ -89,6 +114,7 @@ function startGame() {
             if (enemies[j].getBottomY() >= canv.height) {
                 enemies.splice(j, 1);
                 healthLevel--;
+                healthLostSound.play();
             }
         }
     }
@@ -116,16 +142,18 @@ function startGame() {
         var enemyBullet = new Bullet(images, randomEnemy.getCenterX(), randomEnemy.getBottomY(), canv);
         enemyBullet.setMoveToBottom();
         enemyBullets.push(enemyBullet);
+        laserSound2.play();
     }
 
     var lastBulletSpawnTime = 0;
 
     function spawnBullet() {
         var nowTime = window.performance.now();
-        if (nowTime - lastBulletSpawnTime > 300) {
+        if (nowTime - lastBulletSpawnTime > 500) {
             lastBulletSpawnTime = nowTime;
             var bullet = new Bullet(images, player.getCenterX(), player.getTopY() + 20, canv);
             bullets.push(bullet);
+            laserSound.play();
         }
     }
 
@@ -133,7 +161,7 @@ function startGame() {
     var game = {
         update: function (dt) {
             safeView();
-
+            spaceSound.play();
             if (performance.now() - lastEnemySpawnTime > (1000 + enemies.length * 100)) {
                 lastEnemySpawnTime = performance.now();
                 spawnEnemy();
@@ -222,6 +250,8 @@ function startGame() {
                 ctx.fillText("GameOver", canv.width / 2, canv.height / 2);
 
                 ctx.restore();
+
+                gameOverSound.play();
             }
 
 
