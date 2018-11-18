@@ -51,17 +51,15 @@ function releasedKey(event) {
 
 function handleOrientation(event) {
     gameAction.moveX = Math.round(event.gamma);
-    // if (-5 <= event.gamma && event.gamma <= 5) {
-    //     gameAction.moveX = 0;
-    // } else if (event.gamma <= -15 && event.gamma <= -5) {
-    //     gameAction.moveX = Math.round(event.gamma*10 + 5) / 100; // Left - Right
-    // } else if (event.gamma <= 5 && event.gamma <= 15) {
-    //     gameAction.moveX = Math.round(event.gamma*10 - 5) / 100; // Left - Right
-    // } else if (event.gamma > 15) {
-    //     gameAction.moveX = 1;
-    // } else if (event.gamma < 15) {
-    //     gameAction.moveX = -1;
-    // }
+    if (-2 <= event.gamma && event.gamma <= 2) {
+        gameAction.moveX = 0;
+    } else if (event.gamma <= -10 && event.gamma <= 10) {
+        gameAction.moveX = Math.round(event.gamma) / 10; // Left - Right
+    } else if (event.gamma > 10) {
+        gameAction.moveX = 1;
+    } else if (event.gamma < 10) {
+        gameAction.moveX = -1;
+    }
     // gameAction.moveX = Math.round(event.gamma); 
     // gameAction.moveY = -Math.round(event.beta);
 }
