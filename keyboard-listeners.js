@@ -50,7 +50,9 @@ function releasedKey(event) {
 }
 
 function handleOrientation(event) {
-    if (event.gamma <= -10 && event.gamma <= 10) {
+    if(event.gamma >= -1 && event.gamma <= 1) {
+        gameAction.moveX = Math.round(event.gamma);
+    } else if (event.gamma <= -10 && event.gamma <= 10) {
         gameAction.moveX = event.gamma / 10; // Left - Right
     } else if(event.gamma > 10) {
         gameAction.moveX = 1;
