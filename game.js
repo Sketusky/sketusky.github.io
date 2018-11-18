@@ -58,7 +58,7 @@ function startGame() {
     }
 
     function spawnAidKit() {
-        if (healthLevel < 5 && performance.now() % 2 === 0) {
+        if (healthLevel < 5) {
             var aidkit = new AidKit(images);
             var x = Math.floor(Math.random() * (canv.width - aidkit.getWidth()));
             aidkit.setX(x);
@@ -209,6 +209,6 @@ function startGame() {
             window.requestAnimationFrame(mainLoop);
         }
     }
-    setInterval(spawnAidKit, 2000);
+    setInterval(spawnAidKit, 5000);
     mainLoop();
 }
