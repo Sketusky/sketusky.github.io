@@ -1,6 +1,6 @@
 class Bullet {
-    constructor(images, startX, startY, canv) {
-        this.image = images.get('bullet');
+    constructor(image, startX, startY, canv) {
+        this.image = image;
         this.canv = canv;
 
         this.updateSize();
@@ -23,7 +23,7 @@ class Bullet {
     }
 
     updateSize() {
-        this.width = this.canv.width / 50;
+        this.width = this.canv.width / 33.75;
         this.height = this.image.height / this.image.width * this.width;
     }
 

@@ -139,7 +139,7 @@ function startGame() {
 
     function spawnRandomEnemyShoot() {
         var randomEnemy = enemies[Math.floor((Math.random() * enemies.length))];
-        var enemyBullet = new Bullet(images, randomEnemy.getCenterX(), randomEnemy.getBottomY(), canv);
+        var enemyBullet = new Bullet(images.get('enemy_laser'), randomEnemy.getCenterX(), randomEnemy.getBottomY(), canv);
         enemyBullet.setMoveToBottom();
         enemyBullets.push(enemyBullet);
         laserSound2.play();
@@ -151,7 +151,7 @@ function startGame() {
         var nowTime = window.performance.now();
         if (nowTime - lastBulletSpawnTime > 500) {
             lastBulletSpawnTime = nowTime;
-            var bullet = new Bullet(images, player.getCenterX(), player.getTopY() + 20, canv);
+            var bullet = new Bullet(images.get('laser'), player.getCenterX(), player.getTopY() + 20, canv);
             bullets.push(bullet);
             laserSound.play();
         }

@@ -1,6 +1,10 @@
 class Player {
   constructor(images, gameAction, canv) {
-    this.image = images.get('helicopter');
+    if(Math.floor(Math.random() * 2) === 0) {
+      this.image = images.get('spaceship');
+    } else {
+      this.image = images.get('spaceship_2');
+    }
     this.canv = canv;
     this.updateSize();
 
