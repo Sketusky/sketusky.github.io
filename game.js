@@ -256,7 +256,7 @@ function startGame() {
             if (healthLevel <= 1) {
                 ctx.save();
 
-                ctx.font = "22pt Verdana";
+                ctx.font = "24pt Verdana";
                 ctx.fillStyle = "white";
                 ctx.shadowColor = "black";
                 ctx.shadowBlur = 3;
