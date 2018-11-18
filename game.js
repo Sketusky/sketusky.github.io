@@ -29,7 +29,7 @@ function startGame() {
     var healthGainSound = new sound("./assets/healthgain.mp3");
     var gameOverSound = new sound("./assets/gameover.mp3");
     var laserSound = new sound("./assets/laser.wav");
-    var laserSound2 = new sound("./assets/laser2.wav");
+    var laserSound2 = new sound("./assets/laser3.mp3");
     var spaceSound = new sound("./assets/space.mp3");
 
     var worldSpeed = 1.0 / 1000.0;
@@ -120,7 +120,7 @@ function startGame() {
     }
 
     function spawnAidKit() {
-        if (healthLevel < 5) {
+        if (healthLevel + aidkits.length < 5) {
             var aidkit = new AidKit(images, canv);
             var x = Math.floor(Math.random() * (canv.width - aidkit.getWidth()));
             aidkit.setX(x);
@@ -149,10 +149,11 @@ function startGame() {
 
     function spawnBullet() {
         var nowTime = window.performance.now();
-        if (nowTime - lastBulletSpawnTime > 500) {
+        if (nowTime - lastBulletSpawnTime > 400) {
             lastBulletSpawnTime = nowTime;
             var bullet = new Laser(images.get('laser'), player.getCenterX(), player.getTopY() + 20, canv);
             lasers.push(bullet);
+            laserSound.stop();
             laserSound.play();
         }
     }
@@ -166,17 +167,17 @@ function startGame() {
             safeView();
             spaceSound.play();
             var nowTime = performance.now();
-            if (nowTime - lastEnemySpawnTime > (1000 + enemies.length * 100)) {
+            if (nowTime - lastEnemySpawnTime > (700 + enemies.length * 100)) {
                 lastEnemySpawnTime = nowTime;
                 spawnEnemy();
             }
 
-            if (nowTime - lastRandomEnemyShoot > 4000) {
+            if (nowTime - lastRandomEnemyShoot > 3000) {
                 lastRandomEnemyShoot = nowTime;
                 spawnRandomEnemyShoot();
             }
 
-            if (nowTime - lastSpawnAidKit > 6000) {
+            if (nowTime - lastSpawnAidKit > 8000) {
                 lastSpawnAidKit = nowTime;
                 spawnAidKit();
             }

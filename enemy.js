@@ -6,7 +6,7 @@ class Enemy {
 
     this.x = 0;
     this.y = -this.image.height;
-    this.ySpeed = this.canv.height * 0.2;
+    this.ySpeed = this.canv.height * 0.15;
   }
 
   getWidth() {
