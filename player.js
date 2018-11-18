@@ -24,6 +24,14 @@ class Player {
     return this.x + this.width / 2;
   }
 
+  getStartX() {
+    return this.x;
+  }
+
+  getEndX() {
+    return this.x + this.width;
+  }
+
   getTopY() {
     return this.y;
   }

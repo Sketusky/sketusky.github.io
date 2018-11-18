@@ -16,6 +16,14 @@ class Enemy {
     this.x = x;
   }
 
+  getStartX() {
+    return this.x;
+  }
+
+  getEndX() {
+    return this.x + this.width;
+  }
+
   getTopY() {
     return this.y;
   }

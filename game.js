@@ -22,11 +22,24 @@ function startGame() {
     var background = new Background(images, canv);
     var battery = new Battery(images, canv.width, canv.height);
 
+    function enemyPlayerCollisionDetect() {
+        for(i=0; i < enemies.length; i++) {
+            if(enemies[i].getTopY() < player.getTopY() && player.getTopY() < enemies[i].getBottomY() &&
+                (enemies[i].getStartX() < player.getStartX() && player.getStartX() < enemies[i].getEndX() ||
+                enemies[i].getStartX() < player.getEndX() && player.getEndX() < enemies[i].getEndX())) {
+
+                enemies.splice(i, 1);
+                healthLevel--;
+                break;
+            }
+        }
+    }
+
     function enemyBulletCollisionDetect() {
-        for (i = 0; i < bullets.length; i++) {
-            for (j = 0; j < enemies.length; j++) {
+        for (var i = 0; i < bullets.length; i++) {
+            for (var j = 0; j < enemies.length; j++) {
                 if (enemies[j].getTopY() <= bullets[i].getTopY() && bullets[i].y <= enemies[j].getBottomY() &&
-                    enemies[j].x <= bullets[i].x && bullets[i].x <= enemies[j].x + enemies[j].width) {
+                    enemies[j].getStartX() <= bullets[i].x && bullets[i].x <= enemies[j].x + enemies[j].width) {
                     console.log("collision!");
                     bullets.splice(i, 1);
                     enemies.splice(j, 1);
@@ -117,6 +130,7 @@ function startGame() {
 
             enemyBulletCollisionDetect();
             enemyCollisionDetectWithBorder();
+            enemyPlayerCollisionDetect();
 
             battery.update(5 - healthLevel);
 
@@ -178,7 +192,7 @@ function startGame() {
             ctx.shadowColor = "black";
             ctx.shadowBlur = 3;
             ctx.textAlign = "right";
-            ctx.fillText("09:46 18.11.2018", canv.width - 20, 30);
+            ctx.fillText("10:15 18.11.2018", canv.width - 20, 30);
 
             ctx.restore();
 
