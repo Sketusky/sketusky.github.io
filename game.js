@@ -26,7 +26,8 @@ function startGame() {
         for(i=0; i < enemies.length; i++) {
             if(enemies[i].getTopY() < player.getTopY() && player.getTopY() < enemies[i].getBottomY() &&
                 (enemies[i].getStartX() < player.getStartX() && player.getStartX() < enemies[i].getEndX() ||
-                enemies[i].getStartX() < player.getEndX() && player.getEndX() < enemies[i].getEndX())) {
+                enemies[i].getStartX() < player.getEndX() && player.getEndX() < enemies[i].getEndX() ||
+                enemies[i].getStartX() < player.getCenterX() && player.getCenterX() < enemies[i].getEndX())) {
 
                 enemies.splice(i, 1);
                 healthLevel--;
@@ -192,7 +193,7 @@ function startGame() {
             ctx.shadowColor = "black";
             ctx.shadowBlur = 3;
             ctx.textAlign = "right";
-            ctx.fillText("10:15 18.11.2018", canv.width - 20, 30);
+            ctx.fillText("10:20 18.11.2018", canv.width - 20, 30);
 
             ctx.restore();
 
