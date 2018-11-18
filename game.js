@@ -158,15 +158,28 @@ function startGame() {
     }
 
     var lastEnemySpawnTime = 0;
+    var lastRandomEnemyShoot = 0;
+    var lastSpawnAidKit = 0;
+
     var game = {
         update: function (dt) {
             safeView();
             spaceSound.play();
-            if (performance.now() - lastEnemySpawnTime > (1000 + enemies.length * 100)) {
-                lastEnemySpawnTime = performance.now();
+            var nowTime = performance.now();
+            if (nowTime - lastEnemySpawnTime > (1000 + enemies.length * 100)) {
+                lastEnemySpawnTime = nowTime;
                 spawnEnemy();
             }
 
+            if(nowTime - lastRandomEnemyShoot > 5500) {
+                lastRandomEnemyShoot = nowTime;
+                spawnRandomEnemyShoot();
+            }
+
+            if(nowTime - lastSpawnAidKit > 6000) {
+                lastSpawnAidKit = nowTime;
+                spawnAidKit();
+            }
 
             background.update(dt, worldSpeed);
             enemies.forEach(enemy => {
@@ -252,6 +265,7 @@ function startGame() {
                 ctx.restore();
 
                 gameOverSound.play();
+                spaceSound.stop();
             }
 
 
@@ -294,7 +308,5 @@ function startGame() {
             window.requestAnimationFrame(mainLoop);
         }
     }
-    setInterval(spawnAidKit, 5000);
-    setInterval(spawnRandomEnemyShoot, 5500);
     mainLoop();
 }
