@@ -53,7 +53,8 @@ var lastMeasures = [0, 0, 0, 0, 0];
 var counter = 0;
 
 function handleOrientation(event) {
-    lastMeasures[counter++] = event.gamma;
+    lastMeasures[counter] = event.gamma;
+    counter = (counter + 1) % lastMeasures.length;
     var average = 0;
     lastMeasures.forEach(measure => {
         average += measure;
