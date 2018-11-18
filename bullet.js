@@ -6,7 +6,11 @@ class Bullet {
 
         this.x = startX;
         this.y = startY;
-        this.ySpeed = -window.innerHeight*0.8;
+        this.ySpeed = -window.innerHeight*0.95;
+    }
+
+    setMoveToBottom() {
+        this.ySpeed = -this.ySpeed/2;
     }
 
     getTopY() {
@@ -23,6 +27,7 @@ class Bullet {
     }
 
     update(dt, worldSpeed) {
+        this.ySpeed *= 1.03;
         this.updateSize();
         this.y += this.ySpeed * dt * worldSpeed;
     }

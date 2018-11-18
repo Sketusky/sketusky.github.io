@@ -18,6 +18,7 @@ function startGame() {
     var aidkits = [];
     var enemies = [];
     var bullets = [];
+    var enemyBullets = [];
     var player = new Player(images, gameAction, canv);
     var background = new Background(images, canv);
     var battery = new Battery(images, canv.width, canv.height);
@@ -48,6 +49,17 @@ function startGame() {
                     break;
                 }
             }
+        }
+    }
+
+    function playerBulletCollisionDetect() {
+        for (var i = 0; i < enemyBullets.length; i++) {
+                if (player.getTopY() <= enemyBullets[i].getTopY() && enemyBullets[i].y <= player.getBottomY() &&
+                player.getStartX() <= enemyBullets[i].x && enemyBullets[i].x <= player.x + player.getWidth()) {
+                    enemyBullets.splice(i, 1);
+                    healthLevel--;
+                    break;
+                }
         }
     }
 
@@ -89,6 +101,13 @@ function startGame() {
         }
     }
 
+    function spawnRandomEnemyShoot() {
+        var randomEnemy = enemies[Math.floor((Math.random() * enemies.length))];
+        var enemyBullet = new Bullet(images, randomEnemy.getCenterX(), randomEnemy.getBottomY());
+        enemyBullet.setMoveToBottom();
+        enemyBullets.push(enemyBullet);
+    }
+
     var lastBulletSpawnTime = 0;
 
     function spawnBullet() {
@@ -106,7 +125,7 @@ function startGame() {
             ctx.canvas.width  = window.innerWidth;
             ctx.canvas.height = window.innerHeight;
 
-            if(performance.now() - lastEnemySpawnTime > (600 + enemies.length*100)) {
+            if(performance.now() - lastEnemySpawnTime > (1000 + enemies.length*100)) {
                 lastEnemySpawnTime = performance.now();
                 spawnEnemy();
             } 
@@ -124,6 +143,13 @@ function startGame() {
                 }
             });
 
+            enemyBullets.forEach(function (bullet, index, object) {
+                bullet.update(dt, worldSpeed);
+                if (bullet.y > this.canv.height) {
+                    object.splice(index, 1);
+                }
+            });
+
             if (gameAction.shoot === 1) {
                 spawnBullet();
                 gameAction.shoot = 0;
@@ -131,6 +157,7 @@ function startGame() {
 
             enemyBulletCollisionDetect();
             enemyCollisionDetectWithBorder();
+            playerBulletCollisionDetect();
             enemyPlayerCollisionDetect();
 
             battery.update(5 - healthLevel);
@@ -149,6 +176,10 @@ function startGame() {
             });
 
             bullets.forEach(bullet => {
+                bullet.draw(ctx);
+            });
+
+            enemyBullets.forEach(bullet => {
                 bullet.draw(ctx);
             });
 
@@ -193,7 +224,7 @@ function startGame() {
             ctx.shadowColor = "black";
             ctx.shadowBlur = 3;
             ctx.textAlign = "right";
-            ctx.fillText("10:20 18.11.2018", canv.width - 20, 30);
+            ctx.fillText("10:57 18.11.2018", canv.width - 20, 30);
 
             ctx.restore();
 
@@ -225,5 +256,6 @@ function startGame() {
         }
     }
     setInterval(spawnAidKit, 5000);
+    setInterval(spawnRandomEnemyShoot, 5500);
     mainLoop();
 }

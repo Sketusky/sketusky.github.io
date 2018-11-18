@@ -5,7 +5,7 @@ class Enemy {
 
     this.x = 0;
     this.y = -this.image.height;
-    this.ySpeed = window.innerHeight*0.2;
+    this.ySpeed = window.innerHeight*0.15;
   }
 
   getWidth() {
@@ -14,6 +14,10 @@ class Enemy {
 
   setX(x) {
     this.x = x;
+  }
+
+  getCenterX() {
+    return this.x + this.width / 2;
   }
 
   getStartX() {
