@@ -15,7 +15,7 @@ class Background {
 
     update(dt, worldSpeed) {
         this.y += this.ySpeed * dt * worldSpeed;
-        if (this.y >= this.backgrounds[0].height) {
+        if (this.y >= this.canv.height) {
             this.y = 0;
             var temp = this.backgrounds[0];
             this.backgrounds[0] = this.backgrounds[1];
@@ -24,7 +24,7 @@ class Background {
     }
 
     draw(ctx) {
-        ctx.drawImage(this.backgrounds[0], 0, 0, this.backgrounds[0].width, this.backgrounds[0].height, 0, this.y, this.canv.width, this.canv.height);
+        ctx.drawImage(this.backgrounds[0], 0, 0, this.backgrounds[0].width, this.backgrounds[0].height, 0, this.y,  this.canv.width, this.canv.height);
         ctx.drawImage(this.backgrounds[1], 0, 0, this.backgrounds[1].width, this.backgrounds[1].height, 0, this.y - this.canv.height + 1, this.canv.width, this.canv.height);
     }
 }

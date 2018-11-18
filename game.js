@@ -38,8 +38,8 @@ function startGame() {
     var healthLevel = 5;
     var aidkits = [];
     var enemies = [];
-    var bullets = [];
-    var enemyBullets = [];
+    var lasers = [];
+    var enemyLasers = [];
     var player = new Player(images, gameAction, canv);
     var background = new Background(images, canv);
     var battery = new Battery(images, canv.width, canv.height, canv);
@@ -71,12 +71,12 @@ function startGame() {
     }
 
     function enemyBulletCollisionDetect() {
-        for (var i = 0; i < bullets.length; i++) {
+        for (var i = 0; i < lasers.length; i++) {
             for (var j = 0; j < enemies.length; j++) {
-                if (enemies[j].getTopY() <= bullets[i].getTopY() && bullets[i].y <= enemies[j].getBottomY() &&
-                    enemies[j].getStartX() <= bullets[i].x && bullets[i].x <= enemies[j].x + enemies[j].width) {
+                if (enemies[j].getTopY() <= lasers[i].getTopY() && lasers[i].y <= enemies[j].getBottomY() &&
+                    enemies[j].getStartX() <= lasers[i].x && lasers[i].x <= enemies[j].x + enemies[j].width) {
                     console.log("collision!");
-                    bullets.splice(i, 1);
+                    lasers.splice(i, 1);
                     enemies.splice(j, 1);
                     score++;
                     break;
@@ -86,10 +86,10 @@ function startGame() {
     }
 
     function playerBulletCollisionDetect() {
-        for (var i = 0; i < enemyBullets.length; i++) {
-            if (player.getTopY() <= enemyBullets[i].getTopY() && enemyBullets[i].y <= player.getBottomY() &&
-                player.getStartX() <= enemyBullets[i].x && enemyBullets[i].x <= player.x + player.getWidth()) {
-                enemyBullets.splice(i, 1);
+        for (var i = 0; i < enemyLasers.length; i++) {
+            if (player.getTopY() <= enemyLasers[i].getTopY() && enemyLasers[i].y <= player.getBottomY() &&
+                player.getStartX() <= enemyLasers[i].x && enemyLasers[i].x <= player.x + player.getWidth()) {
+                enemyLasers.splice(i, 1);
                 healthLevel--;
                 healthLostSound.play();
                 break;
@@ -139,9 +139,9 @@ function startGame() {
 
     function spawnRandomEnemyShoot() {
         var randomEnemy = enemies[Math.floor((Math.random() * enemies.length))];
-        var enemyBullet = new Bullet(images.get('enemy_laser'), randomEnemy.getCenterX(), randomEnemy.getBottomY(), canv);
+        var enemyBullet = new Laser(images.get('enemy_laser'), randomEnemy.getCenterX(), randomEnemy.getBottomY(), canv);
         enemyBullet.setMoveToBottom();
-        enemyBullets.push(enemyBullet);
+        enemyLasers.push(enemyBullet);
         laserSound2.play();
     }
 
@@ -151,8 +151,8 @@ function startGame() {
         var nowTime = window.performance.now();
         if (nowTime - lastBulletSpawnTime > 500) {
             lastBulletSpawnTime = nowTime;
-            var bullet = new Bullet(images.get('laser'), player.getCenterX(), player.getTopY() + 20, canv);
-            bullets.push(bullet);
+            var bullet = new Laser(images.get('laser'), player.getCenterX(), player.getTopY() + 20, canv);
+            lasers.push(bullet);
             laserSound.play();
         }
     }
@@ -171,12 +171,12 @@ function startGame() {
                 spawnEnemy();
             }
 
-            if(nowTime - lastRandomEnemyShoot > 5500) {
+            if (nowTime - lastRandomEnemyShoot > 4000) {
                 lastRandomEnemyShoot = nowTime;
                 spawnRandomEnemyShoot();
             }
 
-            if(nowTime - lastSpawnAidKit > 6000) {
+            if (nowTime - lastSpawnAidKit > 6000) {
                 lastSpawnAidKit = nowTime;
                 spawnAidKit();
             }
@@ -186,14 +186,14 @@ function startGame() {
                 enemy.update(dt, worldSpeed);
             });
             player.update(dt, worldSpeed);
-            bullets.forEach(function (bullet, index, object) {
+            lasers.forEach(function (bullet, index, object) {
                 bullet.update(dt, worldSpeed);
                 if (bullet.y < 0) {
                     object.splice(index, 1);
                 }
             });
 
-            enemyBullets.forEach(function (bullet, index, object) {
+            enemyLasers.forEach(function (bullet, index, object) {
                 bullet.update(dt, worldSpeed);
                 if (bullet.y > this.canv.height) {
                     object.splice(index, 1);
@@ -225,11 +225,11 @@ function startGame() {
                 aidkit.draw(ctx);
             });
 
-            bullets.forEach(bullet => {
+            lasers.forEach(bullet => {
                 bullet.draw(ctx);
             });
 
-            enemyBullets.forEach(bullet => {
+            enemyLasers.forEach(bullet => {
                 bullet.draw(ctx);
             });
 
@@ -277,7 +277,7 @@ function startGame() {
             ctx.shadowColor = "black";
             ctx.shadowBlur = 3;
             ctx.textAlign = "right";
-            ctx.fillText("17:02 18.11.2018", canv.width - 20, 30);
+            ctx.fillText("17:42 18.11.2018", canv.width - 20, 30);
 
             ctx.restore();
 

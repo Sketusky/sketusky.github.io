@@ -1,11 +1,11 @@
-class Bullet {
+class Laser {
     constructor(image, startX, startY, canv) {
         this.image = image;
         this.canv = canv;
 
         this.updateSize();
 
-        this.x = startX;
+        this.x = startX - this.width/2;
         this.y = startY;
         this.ySpeed = -this.canv.height * 0.95;
     }
