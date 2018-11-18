@@ -53,13 +53,12 @@ function handleOrientation(event) {
     if(event.gamma >= -1 && event.gamma <= 1) {
         gameAction.moveX = 0;
     } else if (event.gamma <= -10 && event.gamma <= 10) {
-        gameAction.moveX = event.gamma / 10; // Left - Right
+        gameAction.moveX = Math.round(event.gamma) / 10; // Left - Right
     } else if(event.gamma > 10) {
         gameAction.moveX = 1;
-    } else {
+    } else if(event.gamma < 10) {
         gameAction.moveX = -1;
     }
-    gameAction.moveY = Math.round(event.gamma);
     // gameAction.moveX = Math.round(event.gamma); 
     gameAction.moveY = -Math.round(event.beta);
 }
