@@ -23,7 +23,7 @@ class Bullet {
     }
 
     updateSize() {
-        this.width = this.canv.width / 33.75;
+        this.width = this.canv.width / 30;
         this.height = this.image.height / this.image.width * this.width;
     }
 

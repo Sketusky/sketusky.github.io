@@ -244,7 +244,7 @@ function startGame() {
             ctx.save();
 
             ctx.font = "20pt Calibri";
-            ctx.fillStyle = "yellow";
+            ctx.fillStyle = "#48D1CC";
             // ctx.shadowColor = "rgba(0,0,0,0.3)";
             ctx.shadowColor = "black";
             ctx.shadowBlur = 3;
