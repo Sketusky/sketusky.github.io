@@ -49,7 +49,7 @@ function releasedKey(event) {
     }
 }
 
-var lastMeasures = [0, 0, 0, 0, 0];
+var lastMeasures = [0, 0];
 var counter = 0;
 
 function handleOrientation(event) {
