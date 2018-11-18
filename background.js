@@ -2,7 +2,7 @@ class Background {
     constructor(images, canv) {
         this.canv = canv;
         this.backgrounds = [];
-        
+
         var background = images.get('background');
         var background2 = images.get('background_2');
 
@@ -10,12 +10,12 @@ class Background {
         this.backgrounds.push(background2);
 
         this.y = 0;
-        this.ySpeed = window.innerHeight*0.05;
+        this.ySpeed = this.canv.height * 0.05;
     }
 
     update(dt, worldSpeed) {
         this.y += this.ySpeed * dt * worldSpeed;
-        if(this.y >= this.backgrounds[0].height) {
+        if (this.y >= this.backgrounds[0].height) {
             this.y = 0;
             var temp = this.backgrounds[0];
             this.backgrounds[0] = this.backgrounds[1];

@@ -1,6 +1,7 @@
 class Player {
   constructor(images, gameAction, canv) {
     this.image = images.get('helicopter');
+    this.canv = canv;
     this.updateSize();
 
     this.canv = canv;
@@ -9,8 +10,8 @@ class Player {
     this.x = this.canv.width / 2 - this.width / 2;
     this.y = this.canv.height - this.height - 20;
 
-    this.xSpeed = window.innerWidth * 0.75;
-    this.ySpeed = -window.innerHeight * 0.25; 
+    this.xSpeed = this.canv.width * 0.75;
+    this.ySpeed = -this.canv.height * 0.25;
 
     this.rotation = 0;
     this.rotationSpeed = 20 * 1000;
@@ -41,8 +42,8 @@ class Player {
   }
 
   updateSize() {
-    this.width = window.innerWidth / 4;
-    this.height = this.image.height/this.image.width * this.width;
+    this.width = this.canv.width / 4;
+    this.height = this.image.height / this.image.width * this.width;
   }
 
   update(dt, worldSpeed) {

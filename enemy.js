@@ -1,11 +1,12 @@
 class Enemy {
-  constructor(images) {
+  constructor(images, canv) {
     this.image = images.get('alien');
+    this.canv = canv;
     this.updateSize();
 
     this.x = 0;
     this.y = -this.image.height;
-    this.ySpeed = window.innerHeight*0.15;
+    this.ySpeed = this.canv.height * 0.15;
   }
 
   getWidth() {
@@ -37,8 +38,8 @@ class Enemy {
   }
 
   updateSize() {
-    this.width = window.innerWidth / 5;
-    this.height = this.image.height/this.image.width * this.width;
+    this.width = this.canv.width / 5;
+    this.height = this.image.height / this.image.width * this.width;
   }
 
   update(dt, worldSpeed) {

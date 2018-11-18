@@ -1,16 +1,17 @@
 class Bullet {
-    constructor(images, startX, startY) {
+    constructor(images, startX, startY, canv) {
         this.image = images.get('bullet');
+        this.canv = canv;
 
         this.updateSize();
 
         this.x = startX;
         this.y = startY;
-        this.ySpeed = -window.innerHeight*0.95;
+        this.ySpeed = -this.canv.height * 0.95;
     }
 
     setMoveToBottom() {
-        this.ySpeed = -this.ySpeed/2;
+        this.ySpeed = -this.ySpeed / 2;
     }
 
     getTopY() {
@@ -22,8 +23,8 @@ class Bullet {
     }
 
     updateSize() {
-        this.width = window.innerWidth / 50;
-        this.height = this.image.height/this.image.width * this.width;
+        this.width = this.canv.width / 50;
+        this.height = this.image.height / this.image.width * this.width;
     }
 
     update(dt, worldSpeed) {

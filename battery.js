@@ -1,6 +1,7 @@
 class Battery {
-    constructor(images, startX, startY) {
+    constructor(images, startX, startY, canv) {
         this.image = images.get('battery');
+        this.canv = canv;
         this.updateSize();
 
         this.x = startX;
@@ -9,8 +10,8 @@ class Battery {
     }
 
     updateSize() {
-        this.width = window.innerWidth / 11.25;
-        this.height = this.image.height/this.image.width*5 * this.width;
+        this.width = this.canv.width / 11.25;
+        this.height = this.image.height / this.image.width * 5 * this.width;
     }
 
     update(level) {

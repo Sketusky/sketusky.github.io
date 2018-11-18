@@ -8,8 +8,7 @@ function startGame() {
     console.log("GameStarted");
     var canv = document.getElementById("canvas");
     var ctx = canv.getContext("2d");
-    ctx.canvas.width  = window.innerWidth;
-    ctx.canvas.height = window.innerHeight;
+    safeView();
 
     var worldSpeed = 1.0 / 1000.0;
 
@@ -21,14 +20,25 @@ function startGame() {
     var enemyBullets = [];
     var player = new Player(images, gameAction, canv);
     var background = new Background(images, canv);
-    var battery = new Battery(images, canv.width, canv.height);
+    var battery = new Battery(images, canv.width, canv.height, canv);
+
+    function safeView() {
+        ctx.canvas.height = window.innerHeight;
+
+        if (window.innerWidth > innerHeight) {
+            ctx.canvas.height = window.innerHeight;
+            ctx.canvas.width = window.innerHeight / 16 * 9;
+        } else {
+            ctx.canvas.width = window.innerWidth;
+        }
+    }
 
     function enemyPlayerCollisionDetect() {
-        for(i=0; i < enemies.length; i++) {
-            if(enemies[i].getTopY() < player.getTopY() && player.getTopY() < enemies[i].getBottomY() &&
+        for (i = 0; i < enemies.length; i++) {
+            if (enemies[i].getTopY() < player.getTopY() && player.getTopY() < enemies[i].getBottomY() &&
                 (enemies[i].getStartX() < player.getStartX() && player.getStartX() < enemies[i].getEndX() ||
-                enemies[i].getStartX() < player.getEndX() && player.getEndX() < enemies[i].getEndX() ||
-                enemies[i].getStartX() < player.getCenterX() && player.getCenterX() < enemies[i].getEndX())) {
+                    enemies[i].getStartX() < player.getEndX() && player.getEndX() < enemies[i].getEndX() ||
+                    enemies[i].getStartX() < player.getCenterX() && player.getCenterX() < enemies[i].getEndX())) {
 
                 enemies.splice(i, 1);
                 healthLevel--;
@@ -54,12 +64,12 @@ function startGame() {
 
     function playerBulletCollisionDetect() {
         for (var i = 0; i < enemyBullets.length; i++) {
-                if (player.getTopY() <= enemyBullets[i].getTopY() && enemyBullets[i].y <= player.getBottomY() &&
+            if (player.getTopY() <= enemyBullets[i].getTopY() && enemyBullets[i].y <= player.getBottomY() &&
                 player.getStartX() <= enemyBullets[i].x && enemyBullets[i].x <= player.x + player.getWidth()) {
-                    enemyBullets.splice(i, 1);
-                    healthLevel--;
-                    break;
-                }
+                enemyBullets.splice(i, 1);
+                healthLevel--;
+                break;
+            }
         }
     }
 
@@ -85,7 +95,7 @@ function startGame() {
 
     function spawnAidKit() {
         if (healthLevel < 5) {
-            var aidkit = new AidKit(images);
+            var aidkit = new AidKit(images, canv);
             var x = Math.floor(Math.random() * (canv.width - aidkit.getWidth()));
             aidkit.setX(x);
             aidkits.push(aidkit);
@@ -94,7 +104,7 @@ function startGame() {
 
     function spawnEnemy() {
         if (enemies.length < 9) {
-            var enemy = new Enemy(images);
+            var enemy = new Enemy(images, canv);
             var x = enemy.width * Math.floor(Math.random() * (this.canv.width / enemy.width));
             enemy.setX(x);
             enemies.push(enemy);
@@ -103,7 +113,7 @@ function startGame() {
 
     function spawnRandomEnemyShoot() {
         var randomEnemy = enemies[Math.floor((Math.random() * enemies.length))];
-        var enemyBullet = new Bullet(images, randomEnemy.getCenterX(), randomEnemy.getBottomY());
+        var enemyBullet = new Bullet(images, randomEnemy.getCenterX(), randomEnemy.getBottomY(), canv);
         enemyBullet.setMoveToBottom();
         enemyBullets.push(enemyBullet);
     }
@@ -114,7 +124,7 @@ function startGame() {
         var nowTime = window.performance.now();
         if (nowTime - lastBulletSpawnTime > 300) {
             lastBulletSpawnTime = nowTime;
-            var bullet = new Bullet(images, player.getCenterX(), player.getTopY() + 20);
+            var bullet = new Bullet(images, player.getCenterX(), player.getTopY() + 20, canv);
             bullets.push(bullet);
         }
     }
@@ -122,13 +132,12 @@ function startGame() {
     var lastEnemySpawnTime = 0;
     var game = {
         update: function (dt) {
-            ctx.canvas.width  = window.innerWidth;
-            ctx.canvas.height = window.innerHeight;
+            safeView();
 
-            if(performance.now() - lastEnemySpawnTime > (1000 + enemies.length*100)) {
+            if (performance.now() - lastEnemySpawnTime > (1000 + enemies.length * 100)) {
                 lastEnemySpawnTime = performance.now();
                 spawnEnemy();
-            } 
+            }
 
 
             background.update(dt, worldSpeed);
