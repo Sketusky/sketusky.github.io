@@ -49,18 +49,28 @@ function releasedKey(event) {
     }
 }
 
+var lastMeasures = [0, 0, 0, 0, 0];
+var counter = 0;
+
 function handleOrientation(event) {
-    if (-3 <= event.gamma && event.gamma <= 3) {
-        gameAction.moveX = 0;
-    } else if (event.gamma <= -13 && event.gamma <= -3) {
-        gameAction.moveX = Math.round(event.gamma + 3) / 10; // Left - Right
-    } else if (event.gamma <= 3 && event.gamma <= 13) {
-        gameAction.moveX = Math.round(event.gamma - 3) / 10; // Left - Right
-    } else if (event.gamma > 13) {
-        gameAction.moveX = 1;
-    } else if (event.gamma < 13) {
-        gameAction.moveX = -1;
-    }
+    lastMeasures[counter++] = event.gamma;
+    var average = 0;
+    lastMeasures.forEach(measure => {
+        average += measure;
+    });
+    average /= lastMeasures.length;
+    gameAction.moveX = average;
+    // if (-3 <= event.gamma && event.gamma <= 3) {
+    //     gameAction.moveX = 0;
+    // } else if (event.gamma <= -13 && event.gamma <= -3) {
+    //     gameAction.moveX = Math.round(event.gamma + 3) / 10; // Left - Right
+    // } else if (event.gamma <= 3 && event.gamma <= 13) {
+    //     gameAction.moveX = Math.round(event.gamma - 3) / 10; // Left - Right
+    // } else if (event.gamma > 13) {
+    //     gameAction.moveX = 1;
+    // } else if (event.gamma < 13) {
+    //     gameAction.moveX = -1;
+    // }
     // gameAction.moveX = Math.round(event.gamma); 
     // gameAction.moveY = -Math.round(event.beta);
 }
