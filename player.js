@@ -54,9 +54,9 @@ class Player {
     this.updateSize();
     //Move left-right
     if (this.gameAction.moveX > 0) {
-      this.x += this.xSpeed * dt * worldSpeed * Math.sin(Math.PI * this.gameAction.moveX / 2);
+      this.x += this.xSpeed * dt * worldSpeed;
     } else if (this.gameAction.moveX < 0) {
-      this.x += this.xSpeed * dt * worldSpeed * Math.sin(Math.PI * this.gameAction.moveX / 2);
+      this.x -= this.xSpeed * dt * worldSpeed;
     }
 
     //Move up-down
