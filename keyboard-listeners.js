@@ -60,7 +60,7 @@ function handleOrientation(event) {
         gameAction.moveX = -1;
     }
     // gameAction.moveX = Math.round(event.gamma); 
-    gameAction.moveY = -Math.round(event.beta);
+    // gameAction.moveY = -Math.round(event.beta);
 }
 
 function handleStart(event) {
