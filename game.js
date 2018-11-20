@@ -128,10 +128,20 @@ function startGame() {
         }
     }
 
+    function generateEnemyXNotInLine(rows, x) {
+        for(var i=0; i < rows; i++ ) {
+        while(enemies.length > i && Math.floor(enemies[enemies.length-(i+1)].x) === Math.floor(x)) {
+            x = enemies[0].width * Math.floor(Math.random() * (this.canv.width / enemies[0].width));
+        }
+        return x;
+    }
+    }
+
     function spawnEnemy() {
         if (enemies.length < 9) {
             var enemy = new Enemy(images, canv);
             var x = enemy.width * Math.floor(Math.random() * (this.canv.width / enemy.width));
+            x = generateEnemyXNotInLine(4, x);
             enemy.setX(x);
             enemies.push(enemy);
         }
