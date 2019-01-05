@@ -1,20 +1,14 @@
-document.addEventListener('keydown', pressedKey);
-document.addEventListener('keyup', releasedKey);
-window.addEventListener("deviceorientation", handleOrientation, true);
 
-var canv = document.getElementById("canvas");
-canv.addEventListener("touchstart", handleStart, false);
-canv.addEventListener("touchend", handleEnd, false);
 
 class GameAction {
     constructor() {
         this.moveX = 0;
         this.moveY = 0;
         this.shoot = 0;
+        this.over = false;
     }
 }
 
-var gameAction = new GameAction();
 
 function pressedKey(event) {
     if (event.keyCode === 87 /* w */ ) {
@@ -31,6 +25,10 @@ function pressedKey(event) {
     }
     if (event.keyCode === 32 /* space */ ) {
         gameAction.shoot = 1;
+        if(gameAction.over === true) {
+            gameAction.over = false;
+            startGame();
+        }
     }
 }
 
@@ -66,7 +64,13 @@ function handleOrientation(event) {
 
 function handleStart(event) {
     event.preventDefault();
-    gameAction.shoot = 1;
+    if(gameAction.over === true) {
+        console.log("rect");
+        startGame();
+    } else {
+        gameAction.shoot = 1;
+    }
+
 }
 
 function handleEnd(event) {

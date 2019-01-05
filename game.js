@@ -1,3 +1,5 @@
+var canv = undefined;
+var ctx = undefined;
 window.onload = function () {
     preLoadImages(function () {
         startGame();
@@ -11,26 +13,40 @@ function sound(src) {
     this.sound.setAttribute("controls", "none");
     this.sound.style.display = "none";
     document.body.appendChild(this.sound);
+
     this.play = function () {
         this.sound.play();
-    }
+    };
+
     this.stop = function () {
         this.sound.pause();
-    }
+    };
 }
 
+var healthLostSound = new sound("./assets/healthlost.mp3");
+var healthGainSound = new sound("./assets/healthgain.mp3");
+var gameOverSound = new sound("./assets/gameover.mp3");
+var laserSound = new sound("./assets/laser.wav");
+var laserSound2 = new sound("./assets/laser3.mp3");
+var spaceSound = new sound("./assets/space.mp3");
+var gameAction = undefined;
+var rect = true;
 function startGame() {
     console.log("GameStarted");
-    var canv = document.getElementById("canvas");
-    var ctx = canv.getContext("2d");
+    canv = document.getElementById("canvas");
+    ctx = canv.getContext("2d");
+    window.addEventListener("deviceorientation", handleOrientation, true);
+
     safeView();
 
-    var healthLostSound = new sound("./assets/healthlost.mp3");
-    var healthGainSound = new sound("./assets/healthgain.mp3");
-    var gameOverSound = new sound("./assets/gameover.mp3");
-    var laserSound = new sound("./assets/laser.wav");
-    var laserSound2 = new sound("./assets/laser3.mp3");
-    var spaceSound = new sound("./assets/space.mp3");
+    document.addEventListener('keydown', pressedKey);
+    document.addEventListener('keyup', releasedKey);
+
+    canv.addEventListener("touchstart", handleStart, false);
+    canv.addEventListener("touchend", handleEnd, false);
+
+    canvas.addEventListener('click', handleStart, false);
+    gameAction = new GameAction();
 
     var worldSpeed = 1.0 / 1000.0;
 
@@ -129,12 +145,12 @@ function startGame() {
     }
 
     function generateEnemyXNotInLine(rows, x) {
-        for(var i=0; i < rows; i++ ) {
-        while(enemies.length > i && Math.floor(enemies[enemies.length-(i+1)].x) === Math.floor(x)) {
-            x = enemies[0].width * Math.floor(Math.random() * (this.canv.width / enemies[0].width));
+        for (var i = 0; i < rows; i++) {
+            while (enemies.length > i && Math.floor(enemies[enemies.length - (i + 1)].x) === Math.floor(x)) {
+                x = enemies[0].width * Math.floor(Math.random() * (this.canv.width / enemies[0].width));
+            }
+            return x;
         }
-        return x;
-    }
     }
 
     function spawnEnemy() {
@@ -166,6 +182,57 @@ function startGame() {
             laserSound.stop();
             laserSound.play();
         }
+    }
+
+    function drawDebug(ctx) {
+        ctx.save();
+
+        ctx.font = "20pt Calibri";
+        ctx.fillStyle = "yellow";
+        ctx.shadowColor = "black";
+        ctx.shadowBlur = 3;
+        ctx.textAlign = "right";
+        ctx.fillText("17:05 05.01.2019", canv.width - 20, 30);
+
+        ctx.restore();
+    }
+
+    function drawGameOver(ctx) {
+        ctx.save();
+
+        ctx.font = "20pt Verdana";
+        ctx.fillStyle = "white";
+        ctx.shadowColor = "black";
+        ctx.shadowBlur = 3;
+        ctx.textAlign = "center";
+        ctx.fillText("GameOver", canv.width / 2, canv.height / 2);
+
+        ctx.restore();
+    }
+
+    function drawPlayAgain(ctx) {
+        ctx.save();
+
+        ctx.font = "20pt Verdana";
+        ctx.fillStyle = "white";
+        ctx.shadowColor = "black";
+        ctx.shadowBlur = 3;
+        ctx.textAlign = "center";
+        ctx.fillText("Click to play again!", canv.width / 2, canv.height / 2 - 100);
+
+        ctx.restore();
+    }
+
+    function drawScore(ctx) {
+        ctx.save();
+
+        ctx.font = "20pt Verdana";
+        ctx.fillStyle = "#48D1CC";
+        ctx.shadowColor = "black";
+        ctx.shadowBlur = 3;
+        ctx.fillText("Score " + score, 10, 30);
+
+        ctx.restore();
     }
 
     var lastEnemySpawnTime = 0;
@@ -249,49 +316,18 @@ function startGame() {
             });
 
             battery.draw(ctx);
-
             player.draw(ctx);
 
-            ctx.save();
-
-            ctx.font = "20pt Calibri";
-            ctx.fillStyle = "#48D1CC";
-            // ctx.shadowColor = "rgba(0,0,0,0.3)";
-            ctx.shadowColor = "black";
-            ctx.shadowBlur = 3;
-            ctx.fillText("Score " + score, 10, 30);
-
-            ctx.restore();
+            drawScore(ctx);
 
             if (healthLevel <= 1) {
-                ctx.save();
-
-                ctx.font = "24pt Verdana";
-                ctx.fillStyle = "white";
-                ctx.shadowColor = "black";
-                ctx.shadowBlur = 3;
-                ctx.textAlign = "center";
-                ctx.fillText("GameOver", canv.width / 2, canv.height / 2);
-
-                ctx.restore();
+                drawGameOver(ctx);
+                drawPlayAgain(ctx);
 
                 gameOverSound.play();
                 spaceSound.stop();
             }
-
-
-            ctx.save();
-
-            ctx.font = "20pt Calibri";
-            ctx.fillStyle = "yellow";
-            // ctx.shadowColor = "rgba(0,0,0,0.3)";
-            ctx.shadowColor = "black";
-            ctx.shadowBlur = 3;
-            ctx.textAlign = "right";
-            ctx.fillText("22:25 18.11.2018", canv.width - 20, 30);
-
-            ctx.restore();
-
+            drawDebug(ctx);
         }
     };
 
@@ -317,6 +353,8 @@ function startGame() {
         }
         if (healthLevel > 1) {
             window.requestAnimationFrame(mainLoop);
+        } else {
+            gameAction.over = true;
         }
     }
     mainLoop();
