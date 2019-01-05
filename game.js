@@ -1,5 +1,5 @@
-var canv = undefined;
-var ctx = undefined;
+var canv;
+var ctx;
 window.onload = function () {
     preLoadImages(function () {
         startGame();
@@ -29,10 +29,12 @@ var gameOverSound = new sound("./assets/gameover.mp3");
 var laserSound = new sound("./assets/laser.wav");
 var laserSound2 = new sound("./assets/laser3.mp3");
 var spaceSound = new sound("./assets/space.mp3");
-var gameAction = undefined;
-var rect = true;
+var gameAction;
 function startGame() {
-    console.log("GameStarted");
+    canv = undefined;
+    ctx = undefined;
+    gameAction = undefined;
+
     canv = document.getElementById("canvas");
     ctx = canv.getContext("2d");
     window.addEventListener("deviceorientation", handleOrientation, true);
@@ -200,7 +202,7 @@ function startGame() {
     function drawGameOver(ctx) {
         ctx.save();
 
-        ctx.font = "20pt Verdana";
+        ctx.font = "24pt Verdana";
         ctx.fillStyle = "white";
         ctx.shadowColor = "black";
         ctx.shadowBlur = 3;
@@ -213,7 +215,7 @@ function startGame() {
     function drawPlayAgain(ctx) {
         ctx.save();
 
-        ctx.font = "20pt Verdana";
+        ctx.font = "24pt Verdana";
         ctx.fillStyle = "white";
         ctx.shadowColor = "black";
         ctx.shadowBlur = 3;

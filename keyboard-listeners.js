@@ -1,5 +1,3 @@
-
-
 class GameAction {
     constructor() {
         this.moveX = 0;
@@ -65,7 +63,6 @@ function handleOrientation(event) {
 function handleStart(event) {
     event.preventDefault();
     if(gameAction.over === true) {
-        console.log("rect");
         startGame();
     } else {
         gameAction.shoot = 1;
