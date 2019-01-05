@@ -194,7 +194,7 @@ function startGame() {
         ctx.shadowColor = "black";
         ctx.shadowBlur = 3;
         ctx.textAlign = "right";
-        ctx.fillText("17:05 05.01.2019", canv.width - 20, 30);
+        ctx.fillText("17:18 05.01.2019", canv.width - 20, 30);
 
         ctx.restore();
     }
