@@ -119,7 +119,8 @@ function startGame() {
 
     function aidKitCollisionDetect() {
         for (i = 0; i < aidkits.length; i++) {
-            if (aidkits[i].getTopY() <= player.y && player.y <= aidkits[i].getBottomY()) {
+            if (aidkits[i].getTopY() <= player.y && player.y <= aidkits[i].getBottomY() &&
+                player.x <= aidkits[i].getCenterX() && aidkits[i].getCenterX() <=  player.getEndX()) {
                 aidkits.splice(i, 1);
                 if (healthLevel < 5) {
                     healthLevel++;
@@ -196,7 +197,7 @@ function startGame() {
         ctx.shadowColor = "black";
         ctx.shadowBlur = 3;
         ctx.textAlign = "right";
-        ctx.fillText("19:22 06.01.2019", canv.width - 20, 30);
+        ctx.fillText("20:22 06.01.2019", canv.width - 20, 30);
 
         ctx.restore();
     }
@@ -241,7 +242,7 @@ function startGame() {
 
     function drawScoreList(ctx, scores) {
 
-        var startPoint = 50;
+        var startPoint = 30;
 
         ctx.save();
 

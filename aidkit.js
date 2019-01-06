@@ -13,6 +13,10 @@ class AidKit {
         return this.image.width;
     }
 
+    getCenterX() {
+        return this.x + this.width / 2;
+    }
+
     setX(x) {
         this.x = x;
     }
