@@ -249,20 +249,20 @@ function startGame() {
             ctx.fillStyle = "purple";
             ctx.shadowColor = "black";
             ctx.shadowBlur = 3;
-            ctx.textAlign = "left";
-            ctx.fillText("Top 10 scores", canv.width / 2, canv.height / 2 + startPoint + i*25);
+            ctx.textAlign = "center";
+            ctx.fillText("Top 10 scores", canv.width / 2, canv.height / 2 + startPoint + i*30);
 
         ctx.restore();
 
         for(var i=0; i < scores.length; i++) {
             ctx.save();
 
-            ctx.font = "22pt Arial";
+            ctx.font = "24pt Arial";
             ctx.fillStyle = "orange";
             ctx.shadowColor = "black";
             ctx.shadowBlur = 3;
             ctx.textAlign = "center";
-            ctx.fillText((i+1) + ". " + scores[i], canv.width / 2, canv.height / 2 + startPoint + (i+1)*30);
+            ctx.fillText((i+1) + ". " + scores[i], canv.width / 2, canv.height / 2 + startPoint + (i+1)*35);
 
             ctx.restore();
         }
