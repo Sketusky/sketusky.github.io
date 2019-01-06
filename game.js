@@ -30,6 +30,18 @@ var laserSound = new sound("./assets/laser.wav");
 var laserSound2 = new sound("./assets/laser3.mp3");
 var spaceSound = new sound("./assets/space.mp3");
 var gameAction;
+
+function safeView() {
+    ctx.canvas.height = window.innerHeight;
+
+    if (window.innerWidth > innerHeight) {
+        ctx.canvas.height = window.innerHeight;
+        ctx.canvas.width = window.innerHeight / 16 * 9;
+    } else {
+        ctx.canvas.width = window.innerWidth;
+    }
+}
+
 function startGame() {
     canv = undefined;
     ctx = undefined;
@@ -62,16 +74,7 @@ function startGame() {
     var background = new Background(images, canv);
     var battery = new Battery(images, canv.width, canv.height, canv);
 
-    function safeView() {
-        ctx.canvas.height = window.innerHeight;
-
-        if (window.innerWidth > innerHeight) {
-            ctx.canvas.height = window.innerHeight;
-            ctx.canvas.width = window.innerHeight / 16 * 9;
-        } else {
-            ctx.canvas.width = window.innerWidth;
-        }
-    }
+    
 
     function enemyPlayerCollisionDetect() {
         for (i = 0; i < enemies.length; i++) {
@@ -93,7 +96,6 @@ function startGame() {
             for (var j = 0; j < enemies.length; j++) {
                 if (enemies[j].getTopY() <= lasers[i].getTopY() && lasers[i].y <= enemies[j].getBottomY() &&
                     enemies[j].getStartX() <= lasers[i].x && lasers[i].x <= enemies[j].x + enemies[j].width) {
-                    console.log("collision!");
                     lasers.splice(i, 1);
                     enemies.splice(j, 1);
                     score++;
@@ -132,7 +134,7 @@ function startGame() {
             if (enemies[j].getBottomY() >= canv.height) {
                 enemies.splice(j, 1);
                 healthLevel--;
-                healthLostSound.play();
+                // healthLostSound.play();
             }
         }
     }
@@ -235,6 +237,36 @@ function startGame() {
         ctx.fillText("Score " + score, 10, 30);
 
         ctx.restore();
+    }
+
+    function drawScoreList(ctx, scores) {
+
+        var startPoint = 50;
+
+        ctx.save();
+
+            ctx.font = "22pt Arial";
+            ctx.fillStyle = "purple";
+            ctx.shadowColor = "black";
+            ctx.shadowBlur = 3;
+            ctx.textAlign = "left";
+            ctx.fillText("Top 10 scores", canv.width / 2, canv.height / 2 + startPoint + i*25);
+
+        ctx.restore();
+
+        for(var i=0; i < scores.length; i++) {
+            ctx.save();
+
+            ctx.font = "22pt Arial";
+            ctx.fillStyle = "orange";
+            ctx.shadowColor = "black";
+            ctx.shadowBlur = 3;
+            ctx.textAlign = "center";
+            ctx.fillText((i+1) + ". " + scores[i], canv.width / 2, canv.height / 2 + startPoint + (i+1)*30);
+
+            ctx.restore();
+        }
+        
     }
 
     var lastEnemySpawnTime = 0;
@@ -357,6 +389,14 @@ function startGame() {
             window.requestAnimationFrame(mainLoop);
         } else {
             gameAction.over = true;
+            const http = new XMLHttpRequest();
+            url='http://vps618142.ovh.net:3333/?score=' + score;
+            http.open("GET", url);
+            http.send();
+            http.onreadystatechange=(e)=>{
+                drawScoreList(ctx, JSON.parse(http.responseText));
+                console.log();
+            }
         }
     }
     mainLoop();
