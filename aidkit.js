@@ -25,6 +25,10 @@ class AidKit {
         return this.y;
     }
 
+    getCenterY() {
+        return this.y + this.height / 2;
+    }
+
     getBottomY() {
         return this.y + this.height;
     }

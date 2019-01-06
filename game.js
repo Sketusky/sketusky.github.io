@@ -119,7 +119,7 @@ function startGame() {
 
     function aidKitCollisionDetect() {
         for (i = 0; i < aidkits.length; i++) {
-            if (aidkits[i].getTopY() <= player.y && player.y <= aidkits[i].getBottomY() &&
+            if (aidkits[i].getCenterY() <= player.getBottomY() && player.y <= aidkits[i].getCenterY() &&
                 player.x <= aidkits[i].getCenterX() && aidkits[i].getCenterX() <=  player.getEndX()) {
                 aidkits.splice(i, 1);
                 if (healthLevel < 5) {
@@ -197,7 +197,7 @@ function startGame() {
         ctx.shadowColor = "black";
         ctx.shadowBlur = 3;
         ctx.textAlign = "right";
-        ctx.fillText("20:22 06.01.2019", canv.width - 20, 30);
+        ctx.fillText("20:40 06.01.2019", canv.width - 20, 30);
 
         ctx.restore();
     }
@@ -362,7 +362,7 @@ function startGame() {
                 gameOverSound.play();
                 spaceSound.stop();
             }
-            drawDebug(ctx);
+            // drawDebug(ctx);
         }
     };
 
