@@ -136,6 +136,7 @@ function startGame() {
         for (j = 0; j < enemies.length; j++) {
             if (enemies[j].getBottomY() >= canv.height) {
                 enemies.splice(j, 1);
+                player.playerHit();
                 healthLevel--;
                 // healthLostSound.play();
             }
