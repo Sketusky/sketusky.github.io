@@ -9,6 +9,8 @@ class Enemy {
     this.x = 0;
     this.y = -this.image.height;
     this.ySpeed = this.canv.height * 0.15;
+    this.hit = false;
+    this.rotation = 0;
   }
 
   getWidth() {
@@ -44,17 +46,34 @@ class Enemy {
     this.height = this.image.height / this.image.width * this.width;
   }
 
+  setHit() {
+    this.hit = true;
+    this.dieDirection = Math.floor(Math.random()*10) % 2;
+  }
+
+  getHit() {
+    return this.hit;
+  }
+
   update(dt, worldSpeed) {
     this.updateSize();
     // this.x += this.xSpeed * dt * worldSpeed;
     this.y += this.ySpeed * dt * worldSpeed;
     
     this.counter++;
-    if(this.counter % 30 === 0) {
+    if(this.counter % 10 === 0) {
       var temp = this.image;
       this.image = this.image2;
       this.image2 = temp;
       this.counter = 0;
+    }
+    if(this.hit === true) {
+      this.rotation += dt;
+      if(this.dieDirection === 1) {
+        this.x += dt*0.7;
+      } else {
+        this.x -= dt*0.7;
+      }
     }
     
     // this.rotation =
@@ -64,7 +83,15 @@ class Enemy {
   }
 
   draw(ctx) {
-    ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height, this.x, this.y, this.width, this.height);
+    if(this.hit === true ) {
+      ctx.save();
+      ctx.translate(this.x, this.y);
+      ctx.rotate(Math.PI / 180 * this.rotation);
+      ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height, - this.width / 2, -this.height / 2, this.width, this.height);
+      ctx.restore();
+    } else {
+      ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height, this.x, this.y, this.width, this.height);
+    }
     // ctx.save();
     // ctx.translate(this.x, this.y);
 

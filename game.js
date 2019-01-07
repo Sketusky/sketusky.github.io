@@ -78,12 +78,12 @@ function startGame() {
 
     function enemyPlayerCollisionDetect() {
         for (i = 0; i < enemies.length; i++) {
-            if (enemies[i].getTopY() < player.getTopY() && player.getTopY() < enemies[i].getBottomY() &&
+            if (enemies[i].getHit() === false && enemies[i].getTopY() < player.getTopY() && player.getTopY() < enemies[i].getBottomY() &&
                 (enemies[i].getStartX() < player.getStartX() && player.getStartX() < enemies[i].getEndX() ||
                     enemies[i].getStartX() < player.getEndX() && player.getEndX() < enemies[i].getEndX() ||
                     enemies[i].getStartX() < player.getCenterX() && player.getCenterX() < enemies[i].getEndX())) {
 
-                enemies.splice(i, 1);
+                enemies[i].setHit();
                 player.playerHit();
                 healthLevel--;
                 healthLostSound.play();
@@ -95,10 +95,11 @@ function startGame() {
     function enemyBulletCollisionDetect() {
         for (var i = 0; i < lasers.length; i++) {
             for (var j = 0; j < enemies.length; j++) {
-                if (enemies[j].getTopY() <= lasers[i].getTopY() && lasers[i].y <= enemies[j].getBottomY() &&
+                if (enemies[j].getHit() === false && enemies[j].getTopY() <= lasers[i].getTopY() && lasers[i].y <= enemies[j].getBottomY() &&
                     enemies[j].getStartX() <= lasers[i].x && lasers[i].x <= enemies[j].x + enemies[j].width) {
                     lasers.splice(i, 1);
-                    enemies.splice(j, 1);
+                    // enemies.splice(j, 1);
+                    enemies[j].setHit();
                     score++;
                     break;
                 }
@@ -134,11 +135,19 @@ function startGame() {
 
     function enemyCollisionDetectWithBorder() {
         for (j = 0; j < enemies.length; j++) {
-            if (enemies[j].getBottomY() >= canv.height) {
+            if (enemies[j].getHit() === false && enemies[j].getBottomY() >= canv.height) {
                 enemies.splice(j, 1);
                 player.playerHit();
                 healthLevel--;
                 // healthLostSound.play();
+            }
+        }
+    }
+
+    function enemyCollisionDetectWithBorderDie() {
+        for (j = 0; j < enemies.length; j++) {
+            if (enemies[j].getHit() === true && (enemies[j].x >= canv.width || enemies[j].x < -enemies.getWidth)) {
+                enemies.splice(j, 1);
             }
         }
     }
@@ -173,10 +182,12 @@ function startGame() {
 
     function spawnRandomEnemyShoot() {
         var randomEnemy = enemies[Math.floor((Math.random() * enemies.length))];
-        var enemyBullet = new Laser(images.get('enemy_laser'), randomEnemy.getCenterX(), randomEnemy.getBottomY(), canv);
-        enemyBullet.setMoveToBottom();
-        enemyLasers.push(enemyBullet);
-        laserSound2.play();
+        if(randomEnemy.getHit() === false) {
+            var enemyBullet = new Laser(images.get('enemy_laser'), randomEnemy.getCenterX(), randomEnemy.getBottomY(), canv);
+            enemyBullet.setMoveToBottom();
+            enemyLasers.push(enemyBullet);
+            laserSound2.play();
+        }
     }
 
     var lastBulletSpawnTime = 0;
@@ -325,6 +336,7 @@ function startGame() {
             enemyCollisionDetectWithBorder();
             playerBulletCollisionDetect();
             enemyPlayerCollisionDetect();
+            enemyCollisionDetectWithBorderDie();
 
             battery.update(5 - healthLevel);
 
