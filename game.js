@@ -146,8 +146,9 @@ function startGame() {
 
     function enemyCollisionDetectWithBorderDie() {
         for (j = 0; j < enemies.length; j++) {
-            if (enemies[j].getHit() === true && (enemies[j].x >= canv.width || enemies[j].x < -enemies.getWidth)) {
+            if (enemies[j].x >= canv.width || enemies[j].x < 0) {
                 enemies.splice(j, 1);
+                console.log("delete");
             }
         }
     }
