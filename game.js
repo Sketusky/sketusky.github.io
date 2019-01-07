@@ -84,6 +84,7 @@ function startGame() {
                     enemies[i].getStartX() < player.getCenterX() && player.getCenterX() < enemies[i].getEndX())) {
 
                 enemies.splice(i, 1);
+                player.playerHit();
                 healthLevel--;
                 healthLostSound.play();
                 break;
@@ -110,6 +111,7 @@ function startGame() {
             if (player.getTopY() <= enemyLasers[i].getTopY() && enemyLasers[i].y <= player.getBottomY() &&
                 player.getStartX() <= enemyLasers[i].x && enemyLasers[i].x <= player.x + player.getWidth()) {
                 enemyLasers.splice(i, 1);
+                player.playerHit();
                 healthLevel--;
                 healthLostSound.play();
                 break;

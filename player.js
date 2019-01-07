@@ -19,6 +19,8 @@ class Player {
 
     this.rotation = 0;
     this.rotationSpeed = 20 * 1000;
+
+    this.counter = 0;
   }
 
   getWidth() {
@@ -48,6 +50,10 @@ class Player {
   updateSize() {
     this.width = this.canv.width / 4;
     this.height = this.image.height / this.image.width * this.width;
+  }
+
+  playerHit() {
+    this.counter = 100;
   }
 
   update(dt, worldSpeed) {
@@ -90,10 +96,17 @@ class Player {
       (this.rotation +
         (dt * this.rotationSpeed * worldSpeed * Math.PI) / 180) %
       360;
+
+    if(this.counter > 0) {
+      this.counter--;
+    }
   }
 
   draw(ctx) {
-    ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height, this.x, this.y, this.width, this.height);
+    if(this.counter % 10 !== 0) {
+    } else {
+      ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height, this.x, this.y, this.width, this.height);
+    }
     // ctx.save();
     // ctx.translate(this.x, this.y);
 

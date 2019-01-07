@@ -7,6 +7,7 @@ class AidKit {
         this.x = 0;
         this.y = -this.image.height;
         this.ySpeed = this.canv.height * 0.10;
+        this.rotation = 0;
     }
 
     getWidth() {
@@ -40,9 +41,14 @@ class AidKit {
 
     update(dt, worldSpeed) {
         this.y += this.ySpeed * dt * worldSpeed;
+        this.rotation++;
     }
 
     draw(ctx) {
-        ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height, this.x, this.y, this.width, this.height);
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(Math.PI / 180 * this.rotation);
+        ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height, - this.width / 2, -this.height / 2, this.width, this.height);
+        ctx.restore();
     }
 }

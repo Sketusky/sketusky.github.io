@@ -1,7 +1,9 @@
 class Enemy {
   constructor(images, canv) {
-    this.image = images.get('alien');
+    this.image = images.get('alien_3');
+    this.image2 = images.get('alien_2');
     this.canv = canv;
+    this.counter = 0;
     this.updateSize();
 
     this.x = 0;
@@ -46,6 +48,15 @@ class Enemy {
     this.updateSize();
     // this.x += this.xSpeed * dt * worldSpeed;
     this.y += this.ySpeed * dt * worldSpeed;
+    
+    this.counter++;
+    if(this.counter % 30 === 0) {
+      var temp = this.image;
+      this.image = this.image2;
+      this.image2 = temp;
+      this.counter = 0;
+    }
+    
     // this.rotation =
     //   (this.rotation +
     //     (dt * this.rotationSpeed * worldSpeed * Math.PI) / 180) %

@@ -1,7 +1,7 @@
 var images = new Map();
 
 function preLoadImages(onload) {
-    var imagesNameList = ['aidkit', 'alien', 'background', 'background_2', 'battery', 'laser','enemy_laser', 'spaceship', 'spaceship_2'];
+    var imagesNameList = ['aidkit', 'alien_3', 'alien_2', 'background', 'background_2', 'battery', 'laser','enemy_laser', 'spaceship', 'spaceship_2'];
     var loaded = 0;
     var resolution = 1080;
     if (window.innerWidth <= 720) {
